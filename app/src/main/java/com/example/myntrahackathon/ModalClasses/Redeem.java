@@ -4,11 +4,12 @@ public class Redeem {
     String image;
     String title;
 
-    public Redeem(){}
+    public Redeem() {
+    }
 
-    public Redeem(String image, String title){
-        this.image=image;
-        this.title=title;
+    public Redeem(String image, String title) {
+        this.image = image;
+        this.title = title;
     }
 
     public String getImage() {

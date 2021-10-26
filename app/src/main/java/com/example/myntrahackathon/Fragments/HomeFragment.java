@@ -14,53 +14,36 @@ import com.example.myntrahackathon.R;
 
 public class HomeFragment extends Fragment {
 
-    private View view;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragments_home, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_quiz).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment someFragment = new ActiveQuizzesFragment();
-                assert getFragmentManager() != null;
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container1, someFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        view.findViewById(R.id.button_quiz).setOnClickListener(v -> {
+            assert getFragmentManager() != null;
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainer, new ActiveQuizzesFragment());
+            transaction.commit();
         });
 
-        view.findViewById(R.id.button_redeem).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment someFragment = new RedeemFragment();
-                assert getFragmentManager() != null;
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container1, someFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        view.findViewById(R.id.button_redeem).setOnClickListener(v -> {
+            assert getFragmentManager() != null;
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainer, new RedeemFragment());
+            transaction.commit();
         });
 
-        view.findViewById(R.id.button_leader).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment someFragment = new LeaderboardFragment();
-                assert getFragmentManager() != null;
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container1, someFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        view.findViewById(R.id.button_leader).setOnClickListener(v -> {
+            assert getFragmentManager() != null;
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainer, new LeaderboardFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
     }
 }

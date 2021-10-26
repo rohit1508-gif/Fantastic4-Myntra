@@ -20,16 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RedeemFragment extends Fragment {
+
     RecyclerView recyclerView;
     RedeemAdapter adapter;
-    Context ctx;
+    Context context;
     List<Redeem> list;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragments_redeem, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_redeem, container, false);
     }
 
     @Override
@@ -40,10 +40,10 @@ public class RedeemFragment extends Fragment {
         list.add(new Redeem("", "Get 20% discount"));
         list.add(new Redeem("", ""));
         recyclerView = view.findViewById(R.id.recycler_view);
-        ctx = getActivity();
+        context = getActivity();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        adapter = new RedeemAdapter(list, ctx);
+        adapter = new RedeemAdapter(list, context);
         recyclerView.setAdapter(adapter);
     }
 }

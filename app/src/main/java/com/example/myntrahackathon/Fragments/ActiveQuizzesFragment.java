@@ -13,11 +13,11 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.myntrahackathon.R;
 
 public class ActiveQuizzesFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragments_quiztype, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_active_quizzes, container, false);
     }
 
     @Override
@@ -26,34 +26,33 @@ public class ActiveQuizzesFragment extends Fragment {
         view.findViewById(R.id.type1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openquiz("");
+                startQuiz("");
             }
         });
 
         view.findViewById(R.id.type2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openquiz("");
+                startQuiz("");
             }
         });
 
         view.findViewById(R.id.type3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openquiz("");
+                startQuiz("");
             }
         });
     }
 
-    public void openquiz(String s) {
-        Fragment someFragment = new PlayQuizFragment();
+    public void startQuiz(String s) {
+        Fragment playQuizFragment = new PlayQuizFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("quizId", s);
+        playQuizFragment.setArguments(bundle);
         assert getFragmentManager() != null;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container1, someFragment);
-        transaction.addToBackStack(null);
-        Bundle bundle = new Bundle();
-        bundle.putString("type", s);
-        someFragment.setArguments(bundle);
+        transaction.replace(R.id.fragmentContainer, playQuizFragment);
         transaction.commit();
     }
 }

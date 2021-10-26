@@ -2,27 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:gravity="center">
+    android:padding="10dp">
+
     <Button
         android:id="@+id/type1"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Type 1"
-        android:background="@drawable/button" />
+        android:background="@drawable/button"
+        android:text="Type 1" />
 
     <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Type 2"
         android:id="@+id/type2"
-        android:background="@drawable/button"
-        android:layout_margin="20dp"/>
-    <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Type 2"
+        android:layout_margin="20dp"
+        android:background="@drawable/button"
+        android:text="Type 2" />
+
+    <Button
         android:id="@+id/type3"
-        android:background="@drawable/button"/>
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:text="Type 2" />
 </LinearLayout>
