@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myntrahackathon.Modal.Redeem;
+import com.example.myntrahackathon.ModalClasses.Redeem;
 import com.example.myntrahackathon.R;
 import com.squareup.picasso.Picasso;
 

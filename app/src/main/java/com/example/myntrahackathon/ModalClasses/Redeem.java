@@ -1,4 +1,4 @@
-package com.example.myntrahackathon.Modal;
+package com.example.myntrahackathon.ModalClasses;
 
 public class Redeem {
     String image;
