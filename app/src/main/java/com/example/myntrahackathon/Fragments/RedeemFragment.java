@@ -22,7 +22,7 @@ public class RedeemFragment extends Fragment {
 
     RecyclerView recyclerView;
     ExchangeCardAdapter adapter;
-    List<ExchangeCard> list;
+    List<ExchangeCard> cards;
 
     @Nullable
     @Override
@@ -34,15 +34,15 @@ public class RedeemFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        list = new ArrayList<>();
-        list.add(new ExchangeCard("", "Exchange Card"));
-        list.add(new ExchangeCard("", "Get 20% discount"));
-        list.add(new ExchangeCard("", ""));
+        cards = new ArrayList<>();
+        cards.add(new ExchangeCard("", "Exchange Card", "Use before 24 December 2021"));
+        cards.add(new ExchangeCard("", "Get 20% discount", "Expired on 4 August 2021"));
+        cards.add(new ExchangeCard("", "", "Use before 24 December 2021"));
 
-        recyclerView = view.findViewById(R.id.recycler_view);
+        adapter = new ExchangeCardAdapter(cards, getContext());
+        recyclerView = view.findViewById(R.id.rvExchangeCard);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        adapter = new ExchangeCardAdapter(list, getContext());
         recyclerView.setAdapter(adapter);
     }
 }

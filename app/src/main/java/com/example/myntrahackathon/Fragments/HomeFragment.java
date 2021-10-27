@@ -25,25 +25,27 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         view.findViewById(R.id.button_quiz).setOnClickListener(v -> {
-            assert getFragmentManager() != null;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainer, new ActiveQuizzesFragment());
-            transaction.commit();
+            if (getFragmentManager() != null) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer, new ActiveQuizzesFragment());
+                transaction.commit();
+            }
         });
 
         view.findViewById(R.id.button_redeem).setOnClickListener(v -> {
-            assert getFragmentManager() != null;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainer, new RedeemFragment());
-            transaction.commit();
+            if (getFragmentManager() != null) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer, new RedeemFragment());
+                transaction.commit();
+            }
         });
 
-        view.findViewById(R.id.button_leader).setOnClickListener(v -> {
-            assert getFragmentManager() != null;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainer, new LeaderboardFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
+        view.findViewById(R.id.button_leaderboard).setOnClickListener(v -> {
+            if (getFragmentManager() != null) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer, new LeaderboardFragment());
+                transaction.commit();
+            }
         });
     }
 }

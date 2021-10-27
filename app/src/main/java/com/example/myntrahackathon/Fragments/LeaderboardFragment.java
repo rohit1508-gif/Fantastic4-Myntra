@@ -20,7 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.Adapter.LeaderboardAdapter;
-import com.example.myntrahackathon.ModalClasses.UserScore;
+import com.example.myntrahackathon.ModalClasses.LeaderboardUser;
 import com.example.myntrahackathon.R;
 
 import org.json.JSONArray;
@@ -29,13 +29,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class LeaderboardFragment extends Fragment {
     RecyclerView recyclerView;
     LeaderboardAdapter adapter;
-    Context ctx;
-    List<UserScore> list;
+    Context context;
+    List<LeaderboardUser> users;
 
     @Nullable
     @Override
@@ -46,9 +45,10 @@ public class LeaderboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        list = new ArrayList<>();
-        recyclerView = view.findViewById(R.id.recycler_view);
-        ctx = getActivity();
+
+        users = new ArrayList<>();
+
+        recyclerView = view.findViewById(R.id.rvLeaderboard);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getLeaderBoard();
@@ -56,8 +56,8 @@ public class LeaderboardFragment extends Fragment {
 
     public void getLeaderBoard() {
         String url = "";
-        RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(ctx));
-        ProgressDialog pd = ProgressDialog.show(ctx, null, "Please wait");
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        ProgressDialog pd = ProgressDialog.show(context, null, "Please wait");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -66,14 +66,14 @@ public class LeaderboardFragment extends Fragment {
                         pd.dismiss();
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject obj = response.getJSONObject(i);
-                        UserScore b = new UserScore(
+                        LeaderboardUser b = new LeaderboardUser(
                                 obj.getString("userId"),
                                 obj.getString("name"),
                                 obj.getInt("score")
                         );
-                        list.add((b));
+                        users.add((b));
                     }
-                    adapter = new LeaderboardAdapter(list, ctx);
+                    adapter = new LeaderboardAdapter(users, context);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

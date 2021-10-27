@@ -1,14 +1,14 @@
 package com.example.myntrahackathon.ModalClasses;
 
-public class UserScore {
+public class LeaderboardUser {
     String userId;
     String name;
     int score;
 
-    public UserScore() {
+    public LeaderboardUser() {
     }
 
-    public UserScore(String userId, String name, int score) {
+    public LeaderboardUser(String userId, String name, int score) {
         this.userId = userId;
         this.name = name;
         this.score = score;
