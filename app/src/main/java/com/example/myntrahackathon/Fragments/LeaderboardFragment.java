@@ -19,7 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.myntrahackathon.Adapter.BoardAdapter;
+import com.example.myntrahackathon.Adapter.LeaderboardAdapter;
 import com.example.myntrahackathon.ModalClasses.UserScore;
 import com.example.myntrahackathon.R;
 
@@ -33,7 +33,7 @@ import java.util.Objects;
 
 public class LeaderboardFragment extends Fragment {
     RecyclerView recyclerView;
-    BoardAdapter adapter;
+    LeaderboardAdapter adapter;
     Context ctx;
     List<UserScore> list;
 
@@ -42,27 +42,29 @@ public class LeaderboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_leaderboard, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         list = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recycler_view);
-        ctx= getActivity();
+        ctx = getActivity();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getLeaderBoard();
     }
-    public void getLeaderBoard(){
-        String url="";
+
+    public void getLeaderBoard() {
+        String url = "";
         RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(ctx));
-        ProgressDialog pd = ProgressDialog.show(ctx,null,"Please wait");
+        ProgressDialog pd = ProgressDialog.show(ctx, null, "Please wait");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                try{
-                    if(pd!=null && pd.isShowing())
+                try {
+                    if (pd != null && pd.isShowing())
                         pd.dismiss();
-                    for(int i=0;i<response.length();i++){
+                    for (int i = 0; i < response.length(); i++) {
                         JSONObject obj = response.getJSONObject(i);
                         UserScore b = new UserScore(
                                 obj.getString("userId"),
@@ -71,7 +73,7 @@ public class LeaderboardFragment extends Fragment {
                         );
                         list.add((b));
                     }
-                    adapter = new BoardAdapter(list,ctx);
+                    adapter = new LeaderboardAdapter(list, ctx);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -80,7 +82,7 @@ public class LeaderboardFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if(pd!=null && pd.isShowing())
+                if (pd != null && pd.isShowing())
                     pd.dismiss();
             }
         });

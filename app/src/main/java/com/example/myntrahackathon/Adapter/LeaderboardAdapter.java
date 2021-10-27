@@ -15,25 +15,26 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class BoardAdapter  extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
+public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.MyHolder> {
     List<UserScore> list;
     Context ctx;
-    public BoardAdapter(List<UserScore> list, Context ctx) {
-        this.list=list;
-        this.ctx=ctx;
+
+    public LeaderboardAdapter(List<UserScore> list, Context ctx) {
+        this.list = list;
+        this.ctx = ctx;
     }
 
     @NonNull
     @Override
-    public BoardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_redeem, parent, false);
-        return new ViewHolder(view);
+        return new MyHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BoardAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         UserScore l = list.get(position);
-        holder.t.setData(position+"  " + l.getName());
+        holder.t.setData(position + "  " + l.getName());
         String score = String.valueOf(l.getScore());
         holder.t1.setData(score);
     }
@@ -43,9 +44,10 @@ public class BoardAdapter  extends RecyclerView.Adapter<BoardAdapter.ViewHolder>
         return list.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        Text t,t1;
-        public ViewHolder(@NonNull View itemView) {
+    class MyHolder extends RecyclerView.ViewHolder {
+        Text t, t1;
+
+        public MyHolder(@NonNull View itemView) {
             super(itemView);
             t = itemView.findViewById(R.id.name);
             t1 = itemView.findViewById(R.id.score);

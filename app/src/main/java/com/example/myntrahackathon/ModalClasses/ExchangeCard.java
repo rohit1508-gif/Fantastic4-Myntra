@@ -1,13 +1,13 @@
 package com.example.myntrahackathon.ModalClasses;
 
-public class Redeem {
+public class ExchangeCard {
     String image;
     String title;
 
-    public Redeem() {
+    public ExchangeCard() {
     }
 
-    public Redeem(String image, String title) {
+    public ExchangeCard(String image, String title) {
         this.image = image;
         this.title = title;
     }
