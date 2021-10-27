@@ -1,13 +1,15 @@
 package com.example.myntrahackathon.ModalClasses;
 
-public class Board {
+public class UserScore {
+    String userId;
     String name;
     int score;
 
-    public Board() {
+    public UserScore() {
     }
 
-    public Board(String name, int score) {
+    public UserScore(String userId, String name, int score) {
+        this.userId = userId;
         this.name = name;
         this.score = score;
     }
@@ -26,5 +28,13 @@ public class Board {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

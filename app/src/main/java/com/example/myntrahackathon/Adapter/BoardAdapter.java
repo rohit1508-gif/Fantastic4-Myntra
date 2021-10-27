@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myntrahackathon.ModalClasses.Board;
+import com.example.myntrahackathon.ModalClasses.UserScore;
 import com.example.myntrahackathon.R;
 
 import org.w3c.dom.Text;
@@ -16,9 +16,9 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 public class BoardAdapter  extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
-    List<Board> list;
+    List<UserScore> list;
     Context ctx;
-    public BoardAdapter(List<Board> list, Context ctx) {
+    public BoardAdapter(List<UserScore> list, Context ctx) {
         this.list=list;
         this.ctx=ctx;
     }
@@ -32,7 +32,7 @@ public class BoardAdapter  extends RecyclerView.Adapter<BoardAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull BoardAdapter.ViewHolder holder, int position) {
-        Board l = list.get(position);
+        UserScore l = list.get(position);
         holder.t.setData(position+"  " + l.getName());
         String score = String.valueOf(l.getScore());
         holder.t1.setData(score);

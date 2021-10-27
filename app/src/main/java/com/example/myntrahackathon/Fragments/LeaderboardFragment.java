@@ -20,7 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.Adapter.BoardAdapter;
-import com.example.myntrahackathon.ModalClasses.Board;
+import com.example.myntrahackathon.ModalClasses.UserScore;
 import com.example.myntrahackathon.R;
 
 import org.json.JSONArray;
@@ -35,7 +35,7 @@ public class LeaderboardFragment extends Fragment {
     RecyclerView recyclerView;
     BoardAdapter adapter;
     Context ctx;
-    List<Board> list;
+    List<UserScore> list;
 
     @Nullable
     @Override
@@ -64,7 +64,8 @@ public class LeaderboardFragment extends Fragment {
                         pd.dismiss();
                     for(int i=0;i<response.length();i++){
                         JSONObject obj = response.getJSONObject(i);
-                        Board b = new Board(
+                        UserScore b = new UserScore(
+                                obj.getString("userId"),
                                 obj.getString("name"),
                                 obj.getInt("score")
                         );
