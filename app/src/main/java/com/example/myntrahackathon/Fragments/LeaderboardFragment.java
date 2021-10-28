@@ -1,7 +1,6 @@
 package com.example.myntrahackathon.Fragments;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -33,7 +31,6 @@ import java.util.List;
 public class LeaderboardFragment extends Fragment {
     RecyclerView recyclerView;
     LeaderboardAdapter adapter;
-    Context context;
     List<LeaderboardUser> users;
 
     @Nullable
@@ -56,7 +53,7 @@ public class LeaderboardFragment extends Fragment {
     public void getLeaderBoard() {
         String url = "";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        ProgressDialog pd = ProgressDialog.show(context, null, "Please wait");
+        ProgressDialog pd = ProgressDialog.show(getContext(), null, "Please wait");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -72,7 +69,7 @@ public class LeaderboardFragment extends Fragment {
                         );
                         users.add((b));
                     }
-                    adapter = new LeaderboardAdapter(users, context);
+                    adapter = new LeaderboardAdapter(users);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

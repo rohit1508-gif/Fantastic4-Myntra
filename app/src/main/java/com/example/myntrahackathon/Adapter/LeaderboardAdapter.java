@@ -1,6 +1,5 @@
 package com.example.myntrahackathon.Adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,10 @@ import java.util.List;
 
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.MyHolder> {
 
-    List<LeaderboardUser> list;
-    Context context;
+    List<LeaderboardUser> users;
 
-    public LeaderboardAdapter(List<LeaderboardUser> list, Context context) {
-        this.list = list;
-        this.context = context;
+    public LeaderboardAdapter(List<LeaderboardUser> users) {
+        this.users = users;
     }
 
     @NonNull
@@ -32,14 +29,14 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        LeaderboardUser user = list.get(position);
+        LeaderboardUser user = users.get(position);
         holder.tvName.setText(user.getName());
         holder.tvScore.setText(user.getScore());
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return users.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
