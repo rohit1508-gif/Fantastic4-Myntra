@@ -50,7 +50,6 @@ public class LeaderboardFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.rvLeaderboard);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getLeaderBoard();
     }
 
