@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp">
 
-    <Button
-        android:id="@+id/type1"
-        android:layout_width="200dp"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button"
-        android:text="Type 1" />
+        android:layout_gravity="center_horizontal"
+        android:text="Tap on any quiz to play"
+        android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/type2"
-        android:layout_width="200dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvQuiz"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@drawable/button"
-        android:text="Type 2" />
+        android:layout_marginTop="10dp"
+        tools:listitem="@layout/item_quiz_select" />
 
-    <Button
-        android:id="@+id/type3"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button"
-        android:text="Type 2" />
 </LinearLayout>

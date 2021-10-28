@@ -23,26 +23,7 @@ public class ActiveQuizzesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.type1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startQuiz("");
-            }
-        });
 
-        view.findViewById(R.id.type2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startQuiz("");
-            }
-        });
-
-        view.findViewById(R.id.type3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startQuiz("");
-            }
-        });
     }
 
     public void startQuiz(String s) {
