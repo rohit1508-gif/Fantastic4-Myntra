@@ -1,94 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <TextView
+        android:id="@+id/tvPoints"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="0 Points"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="10dp"
-        android:id="@+id/tvPoints"/>
+        android:text="0 Points"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
+        android:id="@+id/tvTimer"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="30sec"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"
-        android:id="@+id/tvTimer"/>
+        android:text="30sec"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
+        android:id="@+id/tvQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/tvTimer"
-        android:id="@+id/tvQuestion"
-        tools:text="This is question segment"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
+        tools:text="This is question segment" />
 
     <ImageView
+        android:id="@+id/ivQuestion"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvQuestion"
-        android:id="@+id/ivQuestion"
-        tools:src="@drawable/ic_launcher_background"/>
+        tools:src="@drawable/ic_launcher_background" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/tvOption1"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/boardcardview"
+        android:gravity="center"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/ivQuestion"
-        android:layout_margin="10dp"
-        tools:text="Option1"
-        android:textSize="18dp"
-        android:gravity="center"
-        android:background="@drawable/boardcardview"/>
+        tools:text="Option1" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/tvOption2"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/boardcardview"
+        android:gravity="center"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/tvOption1"
-        android:layout_margin="10dp"
-        tools:text="Option2"
-        android:textSize="18dp"
-        android:gravity="center"
-        android:background="@drawable/boardcardview"/>
+        tools:text="Option2" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/tvOption3"
-        app:layout_constraintTop_toBottomOf="@id/tvOption2"
-        android:layout_margin="10dp"
-        tools:text="Option3"
-        android:textSize="18dp"
-        android:gravity="center"
-        android:background="@drawable/boardcardview"/>
-    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvOption4"
-        app:layout_constraintTop_toBottomOf="@id/tvOption3"
+        android:layout_height="35dp"
         android:layout_margin="10dp"
-        tools:text="Option4"
-        android:textSize="18dp"
+        android:background="@drawable/boardcardview"
         android:gravity="center"
-        android:background="@drawable/boardcardview"/>
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/tvOption2"
+        tools:text="Option3" />
+
+    <TextView
+        android:id="@+id/tvOption4"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/boardcardview"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/tvOption3"
+        tools:text="Option4" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/button"
-        android:text="Next"
+        android:text="NEXT"
+        app:cornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvOption4" />

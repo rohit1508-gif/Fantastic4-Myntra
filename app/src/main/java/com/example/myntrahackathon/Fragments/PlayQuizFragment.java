@@ -20,7 +20,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.ModalClasses.Question;
 import com.example.myntrahackathon.R;
-import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -33,8 +32,8 @@ import java.util.List;
 public class PlayQuizFragment extends Fragment {
     String quizId;
     List<Question> questions;
-    TextView tvOption1,tvOption2,tvOption3,tvOption4;
-    int i,correctAns=0;
+    TextView tvOption1, tvOption2, tvOption3, tvOption4, tvTimer;
+    int i, correctAns = 0;
 
     @Nullable
     @Override
@@ -45,19 +44,23 @@ public class PlayQuizFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         questions = new ArrayList<>();
+        tvTimer = view.findViewById(R.id.tvTimer);
         tvOption1 = view.findViewById(R.id.tvOption1);
         tvOption2 = view.findViewById(R.id.tvOption2);
         tvOption3 = view.findViewById(R.id.tvOption3);
         tvOption4 = view.findViewById(R.id.tvOption4);
+
         if (getArguments() != null) {
             quizId = getArguments().getString("quizId");
             getQuestion();
         }
-        i=0;
-        while(i<questions.size()){
+
+        i = 0;
+        while (i < questions.size()) {
             Question l = questions.get(i);
-            ((TextView)view.findViewById(R.id.tvQuestion)).setText(l.getQuestion());
+            ((TextView) view.findViewById(R.id.tvQuestion)).setText(l.getQuestion());
             Picasso.get().load(l.getImage()).into((ImageView) view.findViewById(R.id.ivQuestion));
             tvOption1.setText(l.getOption1());
             tvOption2.setText(l.getOption2());
@@ -66,32 +69,32 @@ public class PlayQuizFragment extends Fragment {
             tvOption1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    isCorrect("a",l.getCorrectOption());
-                    ((TextView)view.findViewById(R.id.tvPoints)).setText(correctAns + " Points");
+                    isCorrect("a", l.getCorrectOption());
+                    ((TextView) view.findViewById(R.id.tvPoints)).setText(correctAns + " Points");
                 }
             });
             tvOption2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    isCorrect("b",l.getCorrectOption());
-                    ((TextView)view.findViewById(R.id.tvPoints)).setText(correctAns + " Points");
+                    isCorrect("b", l.getCorrectOption());
+                    ((TextView) view.findViewById(R.id.tvPoints)).setText(correctAns + " Points");
                 }
             });
             tvOption3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    isCorrect("c",l.getCorrectOption());
-                    ((TextView)view.findViewById(R.id.tvPoints)).setText(correctAns + " Points");
+                    isCorrect("c", l.getCorrectOption());
+                    ((TextView) view.findViewById(R.id.tvPoints)).setText(correctAns + " Points");
                 }
             });
             tvOption4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    isCorrect("d",l.getCorrectOption());
-                    ((TextView)view.findViewById(R.id.tvPoints)).setText(correctAns + " Points");
+                    isCorrect("d", l.getCorrectOption());
+                    ((TextView) view.findViewById(R.id.tvPoints)).setText(correctAns + " Points");
                 }
             });
-            ((MaterialButton)view.findViewById(R.id.btnNext)).setOnClickListener(new View.OnClickListener() {
+            view.findViewById(R.id.btnNext).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     i++;
@@ -99,7 +102,8 @@ public class PlayQuizFragment extends Fragment {
             });
         }
     }
-    public void getQuestion(){
+
+    public void getQuestion() {
         String url = "";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         ProgressDialog pd = ProgressDialog.show(getContext(), null, "Please wait");
@@ -111,7 +115,7 @@ public class PlayQuizFragment extends Fragment {
                         pd.dismiss();
                     for (i = 0; i < response.length(); i++) {
                         JSONObject obj = response.getJSONObject(i);
-                       Question b = new Question(
+                        Question question = new Question(
                                 obj.getString("question"),
                                 obj.getString("image"),
                                 obj.getString("option1"),
@@ -119,9 +123,9 @@ public class PlayQuizFragment extends Fragment {
                                 obj.getString("option3"),
                                 obj.getString("option4"),
                                 obj.getString("correctOption"),
-                               (List<String>) obj.getJSONArray("imgUrl")
-                       );
-                       questions.add((b));
+                                (List<String>) obj.getJSONArray("recommendations")
+                        );
+                        questions.add(question);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -137,26 +141,26 @@ public class PlayQuizFragment extends Fragment {
         requestQueue.add(request);
     }
 
-    public void isCorrect(String optionClicked,String correctOption){
+    public void isCorrect(String optionClicked, String correctOption) {
         tvOption1.setClickable(false);
         tvOption2.setClickable(false);
         tvOption3.setClickable(false);
         tvOption4.setClickable(false);
         switch (optionClicked) {
             case "a":
-                tvOption1.setBackgroundColor(correctOption.equals("a")?Integer.parseInt("green"):Integer.parseInt("red"));
+                tvOption1.setBackgroundColor(correctOption.equals("a") ? Integer.parseInt("green") : Integer.parseInt("red"));
                 break;
             case "b":
-                tvOption2.setBackgroundColor(correctOption.equals("b")?Integer.parseInt("green"):Integer.parseInt("red"));
+                tvOption2.setBackgroundColor(correctOption.equals("b") ? Integer.parseInt("green") : Integer.parseInt("red"));
                 break;
             case "c":
-                tvOption3.setBackgroundColor(correctOption.equals("c")?Integer.parseInt("green"):Integer.parseInt("red"));
+                tvOption3.setBackgroundColor(correctOption.equals("c") ? Integer.parseInt("green") : Integer.parseInt("red"));
                 break;
-           case "d":
-               tvOption4.setBackgroundColor(correctOption.equals("d")?Integer.parseInt("green"):Integer.parseInt("red"));
-               break;
+            case "d":
+                tvOption4.setBackgroundColor(correctOption.equals("d") ? Integer.parseInt("green") : Integer.parseInt("red"));
+                break;
         }
-        if(correctOption.equals(optionClicked))
-        correctAns++;
+        if (correctOption.equals(optionClicked))
+            correctAns++;
     }
 }
