@@ -27,7 +27,7 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.button_quiz).setOnClickListener(v -> {
             if (getFragmentManager() != null) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.add(R.id.fragmentContainer, new ActiveQuizzesFragment());
+                transaction.replace(R.id.fragmentContainer, new ActiveQuizzesFragment());
                 transaction.commit();
             }
         });
@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.button_redeem).setOnClickListener(v -> {
             if (getFragmentManager() != null) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.add(R.id.fragmentContainer, new RedeemFragment());
+                transaction.replace(R.id.fragmentContainer, new RedeemFragment());
                 transaction.commit();
             }
         });
@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.button_leaderboard).setOnClickListener(v -> {
             if (getFragmentManager() != null) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.add(R.id.fragmentContainer, new LeaderboardFragment());
+                transaction.replace(R.id.fragmentContainer, new LeaderboardFragment());
                 transaction.commit();
             }
         });
