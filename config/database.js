@@ -1,18 +1,20 @@
 const { createPool } = require('mysql');
 
 const pool = createPool({
-    port: process.env.DB_PORT,
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.MYSQL_DB,
-    connectionLimit: 10,
+    port: '3306',
+    host: 'beqdfetas6as1orjunp2-mysql.services.clever-cloud.com',
+    user: 'uktonoxzm21uepge',
+    password: 'K2rkHRTBkmWiAh72Kkiv',
+    database: 'beqdfetas6as1orjunp2',
+    connectionLimit: '10',
 });
 
 pool.getConnection((err, connection) => {
     if (err) {
         throw err;
-    } else {
+    
+    }
+    else {
         console.log('MySQL connected...');
     }
     connection.release();
