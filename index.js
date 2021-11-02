@@ -10,6 +10,8 @@ const app = express();
 const PORT = 3300 || process.env.PORT;
 const server = http.createServer(app);
 
+app.use(express.json());
+
 app.get('/', (req, res) =>{
     res.send('Hello World!!');
 })
@@ -66,8 +68,8 @@ app.get('/quiz/game', (req, res) => {
         res.send(quiz);
       })
     
-})
-app.use(express.json());
+ })
+
 //app.use('/api', routes); 
 
 server.listen(process.env.PORT || 3300,  function() {
