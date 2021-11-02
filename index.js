@@ -70,6 +70,6 @@ app.get('/quiz/game', (req, res) => {
 app.use(express.json());
 //app.use('/api', routes); 
 
-server.listen(PORT, "0.0.0.0", function() {
+server.listen(process.env.PORT || 3300, "0.0.0.0", function() {
     console.log("Listening on Port 3300");
 });
