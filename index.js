@@ -70,7 +70,7 @@ app.get('/quiz/game', (req, res) => {
 app.use(express.json());
 //app.use('/api', routes); 
 
-server.listen(PORT||process.env.PORT, () => {
+app.listen(3300 ||process.env.PORT, () => {
     console.log('Server up and running on ', PORT);
 
 });
