@@ -15,6 +15,7 @@ app.get('/', (req, res) =>{
 })
 
 app.get('/quiz', (req, res) => {
+    // res.send()
     res.redirect('/quiz/game');
 })
 
