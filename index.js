@@ -74,6 +74,6 @@ app.get('/', (req, res) =>{
 //app.use('/api', routes); 
 
 server.listen(PORT,  function() {
-    console.log(PORT);
+    console.log("portttttttt"+ PORT);
     console.log("Listening on Port 3300");
 });
