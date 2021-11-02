@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 const express = require('express');
 const http = require('http');
 // const pool = require('./config/database');
@@ -21,7 +21,6 @@ app.get('/', (req, res) =>{
 //     // res.send()
 //     res.redirect('/quiz/game');
 // })
-
 // app.post('/quiz/game/:id/return', (req, res) => {
     
 //     pool.connect(function(err) {
