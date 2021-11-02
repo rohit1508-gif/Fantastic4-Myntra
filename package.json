@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/rohit1508-gif/Fantastic4-Myntra#readme",
   "dependencies": {
-    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "socket.io": "^4.3.1"

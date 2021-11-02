@@ -1,4 +1,4 @@
-require('dotenv').config();
+
 const express = require('express');
 const http = require('http');
 const pool = require('./config/database');
@@ -7,7 +7,7 @@ const pool = require('./config/database');
 const app = express();
 //const routes = require('./router');
 
-const PORT = 3300;
+const PORT = 3300 || process.env.PORT;
 const server = http.createServer(app);
 
 app.get('/', (req, res) =>{
@@ -70,7 +70,6 @@ app.get('/quiz/game', (req, res) => {
 app.use(express.json());
 //app.use('/api', routes); 
 
-app.listen(3300 ||process.env.PORT, () => {
-    console.log('Server up and running on ', PORT);
-
+server.listen(PORT, "0.0.0.0", function() {
+    console.log("Listening on Port 3000");
 });
