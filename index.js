@@ -7,12 +7,13 @@ const http = require('http');
 const app = express();
 //const routes = require('./router');
 
-const PORT = 3300 || process.env.PORT;
+const PORT = process.env.PORT || 3300;
 const server = http.createServer(app);
 
 app.use(express.json());
 
 app.get('/', (req, res) =>{
+    
     res.send('Hello World!!');
 })
 
@@ -73,5 +74,6 @@ app.get('/', (req, res) =>{
 //app.use('/api', routes); 
 
 server.listen(PORT,  function() {
+    console.log(PORT);
     console.log("Listening on Port 3300");
 });
