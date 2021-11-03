@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         //if (intent.getStringExtra("DESTINATION_FRAGMENT").equals("HOME_FRAGMENT")) {
             if (getFragmentManager() != null) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.add(R.id.fragmentContainer, new LeaderboardFragment());
+                transaction.add(R.id.fragmentContainer, new PlayQuizFragment());
                 transaction.commit();
             }
         //}
