@@ -51,7 +51,7 @@ public class LeaderboardFragment extends Fragment {
     }
 
     public void getLeaderBoard() {
-        String url = "";
+        String url = "https://fantastic4-myntra.herokuapp.com/leaderboard";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         ProgressDialog pd = ProgressDialog.show(getContext(), null, "Please wait");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -63,8 +63,8 @@ public class LeaderboardFragment extends Fragment {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject obj = response.getJSONObject(i);
                         LeaderboardUser b = new LeaderboardUser(
-                                obj.getString("userId"),
-                                obj.getString("name"),
+                                obj.getString("user_id"),
+                                obj.getString("username"),
                                 obj.getInt("score")
                         );
                         users.add((b));

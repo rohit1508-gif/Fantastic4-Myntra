@@ -2,4 +2,12 @@
     <string name="app_name">MyntraHackathon</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="clothes_array">
+        <item>Jeans</item>
+        <item>T-shirt</item>
+        <item>Shirts</item>
+        <item>Shorts</item>
+    </string-array>
+
 </resources>
