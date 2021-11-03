@@ -1,5 +1,6 @@
 package com.example.myntrahackathon.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import com.example.myntrahackathon.R;
 
 import java.util.List;
 
-public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.MyHolder> {
+public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.ViewHolder> {
 
     List<LeaderboardUser> users;
 
@@ -23,15 +24,16 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
     @NonNull
     @Override
-    public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_leaderboard_user, parent, false));
+    public LeaderboardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_leaderboard_user,parent,false);
+        return new LeaderboardAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LeaderboardAdapter.ViewHolder holder, int position) {
         LeaderboardUser user = users.get(position);
         holder.tvName.setText(user.getName());
-        holder.tvScore.setText(user.getScore());
+        holder.tvScore.setText(Integer.toString(user.getScore()));
     }
 
     @Override
@@ -39,10 +41,10 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         return users.size();
     }
 
-    class MyHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvScore;
 
-        public MyHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvScore = itemView.findViewById(R.id.tvScore);

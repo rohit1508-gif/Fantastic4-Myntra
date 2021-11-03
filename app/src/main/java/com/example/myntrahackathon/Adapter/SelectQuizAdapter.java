@@ -36,7 +36,6 @@ public class SelectQuizAdapter extends RecyclerView.Adapter<SelectQuizAdapter.My
         QuizInfo quiz = quizzes.get(position);
         holder.tvQuizName.setText(quiz.getName());
         holder.tvQuizDescription.setText(quiz.getDescription());
-        holder.cvMain.setOnClickListener(v -> clickListener.onQuizSelect(quiz.getId()));
     }
 
     @Override

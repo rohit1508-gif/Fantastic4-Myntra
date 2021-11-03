@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +36,7 @@ public class PlayQuizFragment extends Fragment {
     List<Question> questions;
     TextView tvOption1, tvOption2, tvOption3, tvOption4, tvTimer;
     int i, correctAns = 0;
+    Button btnNext;
 
     @Nullable
     @Override
@@ -51,6 +54,7 @@ public class PlayQuizFragment extends Fragment {
         tvOption2 = view.findViewById(R.id.tvOption2);
         tvOption3 = view.findViewById(R.id.tvOption3);
         tvOption4 = view.findViewById(R.id.tvOption4);
+        btnNext = view.findViewById(R.id.btnNext);
 
         if (getArguments() != null) {
             quizId = getArguments().getString("quizId");
@@ -66,6 +70,9 @@ public class PlayQuizFragment extends Fragment {
             tvOption2.setText(l.getOption2());
             tvOption3.setText(l.getOption3());
             tvOption4.setText(l.getOption4());
+            if(i==4){
+                btnNext.setText("Submit");
+            }
             tvOption1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,17 +101,28 @@ public class PlayQuizFragment extends Fragment {
                     ((TextView) view.findViewById(R.id.tvPoints)).setText(correctAns + " Points");
                 }
             });
-            view.findViewById(R.id.btnNext).setOnClickListener(new View.OnClickListener() {
+            btnNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     i++;
                 }
             });
         }
+        if(i==5){
+            Fragment scoreFragment = new ScoreFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("Score", correctAns);
+            scoreFragment.setArguments(bundle);
+            if (getFragmentManager() != null) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer, new ScoreFragment());
+                transaction.commit();
+            }
+        }
     }
 
     public void getQuestion() {
-        String url = "";
+        String url = "https://fantastic4-myntra.herokuapp.com/quiz/game";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         ProgressDialog pd = ProgressDialog.show(getContext(), null, "Please wait");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -116,14 +134,15 @@ public class PlayQuizFragment extends Fragment {
                     for (i = 0; i < response.length(); i++) {
                         JSONObject obj = response.getJSONObject(i);
                         Question question = new Question(
-                                obj.getString("question"),
-                                obj.getString("image"),
-                                obj.getString("option1"),
-                                obj.getString("option2"),
-                                obj.getString("option3"),
-                                obj.getString("option4"),
-                                obj.getString("correctOption"),
-                                (List<String>) obj.getJSONArray("recommendations")
+                                obj.getString("Question"),
+                                obj.getString("Ques_image"),
+                                obj.getString("Option_1"),
+                                obj.getString("Option_2"),
+                                obj.getString("Option_3"),
+                                obj.getString("Option_4"),
+                                obj.getString("Correct_ans"),
+                                obj.getString("Recom_1"),
+                                obj.getString("Recom_2")
                         );
                         questions.add(question);
                     }

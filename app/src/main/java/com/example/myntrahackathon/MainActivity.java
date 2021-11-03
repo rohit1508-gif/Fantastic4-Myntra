@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myntrahackathon.Fragments.HomeFragment;
+import com.example.myntrahackathon.Fragments.LeaderboardFragment;
+import com.example.myntrahackathon.Fragments.PlayQuizFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,13 +17,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-        if (intent.getStringExtra("DESTINATION_FRAGMENT").equals("HOME_FRAGMENT")) {
+        //Intent intent = getIntent();
+        //if (intent.getStringExtra("DESTINATION_FRAGMENT").equals("HOME_FRAGMENT")) {
             if (getFragmentManager() != null) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.add(R.id.fragmentContainer, new HomeFragment());
+                transaction.add(R.id.fragmentContainer, new LeaderboardFragment());
                 transaction.commit();
             }
-        }
+        //}
     }
 }
