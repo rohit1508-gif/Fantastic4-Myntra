@@ -9,7 +9,7 @@
         android:id="@+id/lottie_home_wave"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:scaleX="5"
+        android:scaleX="6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
