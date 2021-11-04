@@ -29,19 +29,23 @@ public class LoginFragment extends Fragment {
         EditText etEmail = view.findViewById(R.id.etEmail);
         EditText etPassword = view.findViewById(R.id.etPassword);
 
-        if (authenticate(etEmail.getText().toString().trim(), etPassword.getText().toString().trim())) {
-            if (getFragmentManager() != null) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainer, new HomeFragment());
-                transaction.commit();
+        view.findViewById(R.id.btnLogIn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (authenticate(etEmail.getText().toString().trim(), etPassword.getText().toString().trim())) {
+                    if (getFragmentManager() != null) {
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragmentContainer, new HomeFragment());
+                        transaction.commit();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Wrong Email ID or Password !!", Toast.LENGTH_SHORT).show();
+                }
             }
-        } else {
-            Toast.makeText(getContext(), "Wrong Email ID or Password !!", Toast.LENGTH_SHORT).show();
-        }
+        });
     }
 
     private Boolean authenticate(String emailId, String password) {
-        // login api call
-        return true;
+        return false;
     }
 }

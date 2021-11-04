@@ -17,6 +17,7 @@ import com.example.myntrahackathon.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ActiveQuizzesFragment extends Fragment {
 
@@ -33,6 +34,7 @@ public class ActiveQuizzesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        requireActivity().setTitle("Active Quizzes");
 
         quizzes = new ArrayList<>();
 

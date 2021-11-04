@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayQuizFragment extends Fragment {
-    private View view;
     private String quizId;
     private List<Question> questions;
     private TextView tvOption1, tvOption2, tvOption3, tvOption4, tvTimer, tvQuestion, tvPoints;
@@ -44,8 +43,7 @@ public class PlayQuizFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_play_quiz, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_play_quiz, container, false);
     }
 
     @Override
