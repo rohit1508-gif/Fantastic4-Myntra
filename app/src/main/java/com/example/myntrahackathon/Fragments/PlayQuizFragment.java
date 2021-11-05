@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayQuizFragment extends Fragment {
-    private String quizId;
+    private String quizId, quizName;
     private List<Question> questions;
     private TextView tvOption1, tvOption2, tvOption3, tvOption4, tvQuestion;
     private int correctAns = 0, questionIndex;
@@ -70,7 +70,9 @@ public class PlayQuizFragment extends Fragment {
 
         if (getArguments() != null) {
             quizId = getArguments().getString("quizId");
+            quizName = getArguments().getString("quizName");
         }
+        getActivity().setTitle(quizName);
         getQuestion();
     }
 

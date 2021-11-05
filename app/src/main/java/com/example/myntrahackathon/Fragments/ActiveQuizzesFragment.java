@@ -57,10 +57,11 @@ public class ActiveQuizzesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    public void startQuiz(String quizId) {
+    public void startQuiz(String quizId, String quizName) {
         Fragment playQuizFragment = new PlayQuizFragment();
         Bundle bundle = new Bundle();
         bundle.putString("quizId", quizId);
+        bundle.putString("quizName", quizName);
         playQuizFragment.setArguments(bundle);
         if (getFragmentManager() != null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
