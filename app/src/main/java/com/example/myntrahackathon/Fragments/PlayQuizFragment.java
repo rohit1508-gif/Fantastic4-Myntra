@@ -3,6 +3,7 @@ package com.example.myntrahackathon.Fragments;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class PlayQuizFragment extends Fragment {
     private String quizId;
     private List<Question> questions;
     private TextView tvOption1, tvOption2, tvOption3, tvOption4, tvTimer, tvQuestion, tvPoints;
-    private int correctAns = 0;
+    private int correctAns = 0, questionIndex;
     private Button btnNext;
     private ImageView ivQuestion;
 
@@ -91,7 +92,9 @@ public class PlayQuizFragment extends Fragment {
                     );
                     questions.add(question);
                 }
-                setQuestion(0);
+                questionIndex = 0;
+                setQuestion();
+                startTimer();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -102,6 +105,44 @@ public class PlayQuizFragment extends Fragment {
             }
         });
         requestQueue.add(request);
+    }
+
+    private void startTimer() {
+        CountDownTimer countDownTimer = new CountDownTimer(12000, 1000) {
+            @Override
+            public void onTick(long l) {
+                int minutes = (int) l / 60000;
+                int seconds = (int) (l % 60000) / 1000;
+                String timeLeft = seconds < 10 ? minutes + " : 0" + seconds : minutes + " : " + seconds;
+                tvTimer.setText(timeLeft);
+            }
+
+            @Override
+            public void onFinish() {
+                if (questionIndex == 5) {
+                    submitScores();
+                } else {
+                    Toast.makeText(getContext(), "Time's up... Moving to next question", Toast.LENGTH_SHORT).show();
+                    questionIndex++;
+                    setQuestion();
+                }
+            }
+        }.start();
+    }
+
+    private void submitScores() {
+        ProgressDialog pd = ProgressDialog.show(getContext(), null, "Quiz over... Submitting your scores");
+        // api call
+        pd.dismiss();
+        Fragment scoreFragment = new ScoreFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("Score", correctAns);
+        scoreFragment.setArguments(bundle);
+        if (getFragmentManager() != null) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainer, new ScoreFragment());
+            transaction.commit();
+        }
     }
 
     private void isCorrect(String optionClicked, String correctOption) {
@@ -134,31 +175,19 @@ public class PlayQuizFragment extends Fragment {
         tvOption4.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.boardcardview));
     }
 
-    private void setQuestion(int ind) {
-        if (ind == 5) {
-            Fragment scoreFragment = new ScoreFragment();
-            Bundle bundle = new Bundle();
-            bundle.putInt("Score", correctAns);
-            scoreFragment.setArguments(bundle);
-            if (getFragmentManager() != null) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainer, new ScoreFragment());
-                transaction.commit();
-            }
-        }
-
+    private void setQuestion() {
         setBackground();
-        Question question = questions.get(ind);
+        Question question = questions.get(questionIndex);
         tvQuestion.setText(question.getQuestion());
         //Picasso.get().load(question.getImage()).into(ivQuestion);
         tvOption1.setText(question.getOption1());
         tvOption2.setText(question.getOption2());
         tvOption3.setText(question.getOption3());
         tvOption4.setText(question.getOption4());
-        if (ind == 4) {
+        if (questionIndex == 4) {
             btnNext.setText("Submit");
         }
-        setOnClickListeners(question, ind);
+        setOnClickListeners(question, questionIndex);
     }
 
     private void setOnClickListeners(Question question, int ind) {
@@ -197,7 +226,12 @@ public class PlayQuizFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setQuestion(ind + 1);
+                if (questionIndex == 5) {
+                    submitScores();
+                } else {
+                    questionIndex++;
+                    setQuestion();
+                }
             }
         });
     }
