@@ -29,6 +29,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.ModalClasses.Question;
 import com.example.myntrahackathon.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -140,12 +141,11 @@ public class PlayQuizFragment extends Fragment {
 
     private void submitScores() {
         lottie_timer.pauseAnimation();
-        ProgressDialog pd = ProgressDialog.show(getContext(), null, "Quiz over... Submitting your scores");
-        // api call
-        pd.dismiss();
         Fragment scoreFragment = new ScoreFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("Score", correctAns);
+        bundle.putString("QuizId", quizId);
+        bundle.putString("QuizName", quizName);
         scoreFragment.setArguments(bundle);
         if (getFragmentManager() != null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -178,20 +178,17 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void setBackground(Context context) {
-        ViewCompat.setBackgroundTintList(tvOption1, ContextCompat.getColorStateList(context, R.color.option_grey));
-        ViewCompat.setBackgroundTintList(tvOption2, ContextCompat.getColorStateList(context, R.color.option_grey));
-        ViewCompat.setBackgroundTintList(tvOption3, ContextCompat.getColorStateList(context, R.color.option_grey));
-        ViewCompat.setBackgroundTintList(tvOption4, ContextCompat.getColorStateList(context, R.color.option_grey));
+        ViewCompat.setBackgroundTintList(tvOption1, ContextCompat.getColorStateList(context, R.color.white));
+        ViewCompat.setBackgroundTintList(tvOption2, ContextCompat.getColorStateList(context, R.color.white));
+        ViewCompat.setBackgroundTintList(tvOption3, ContextCompat.getColorStateList(context, R.color.white));
+        ViewCompat.setBackgroundTintList(tvOption4, ContextCompat.getColorStateList(context, R.color.white));
     }
 
     private void setQuestion() {
         setBackground(getContext());
         Question question = questions.get(questionIndex);
         tvQuestion.setText(question.getQuestion());
-        //Picasso.get().load(question.getImage()).into(ivQuestion);
-        //Picasso.get().load(question.getRecom1()).into(recommendation_1);
-        //Picasso.get().load(question.getRecom2()).into(recommendation_2);
-
+        Picasso.get().load(question.getImage()).into(ivQuestion);
         tvOption1.setText(question.getOption1());
         tvOption2.setText(question.getOption2());
         tvOption3.setText(question.getOption3());
@@ -199,6 +196,8 @@ public class PlayQuizFragment extends Fragment {
         if (questionIndex == 4) {
             btnNext.setText("Submit");
         }
+        Picasso.get().load(question.getRecom1()).into(recommendation_1);
+        Picasso.get().load(question.getRecom2()).into(recommendation_2);
         setOnClickListeners(question, questionIndex);
         lottie_timer.playAnimation();
         startTimer();
