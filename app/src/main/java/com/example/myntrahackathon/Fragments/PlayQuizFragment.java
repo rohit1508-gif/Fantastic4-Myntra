@@ -39,11 +39,12 @@ import java.util.List;
 public class PlayQuizFragment extends Fragment {
     private String quizId;
     private List<Question> questions;
-    private TextView tvOption1, tvOption2, tvOption3, tvOption4, tvTimer, tvQuestion, tvPoints;
+    private TextView tvOption1, tvOption2, tvOption3, tvOption4, tvQuestion;
     private int correctAns = 0, questionIndex;
     private Button btnNext;
-    private ImageView ivQuestion;
-    LottieAnimationView lottie_timer;
+    private ImageView ivQuestion, recommendation_1, recommendation_2;
+    private LottieAnimationView lottie_timer;
+    private CountDownTimer countDownTimer;
 
     @Nullable
     @Override
@@ -61,10 +62,11 @@ public class PlayQuizFragment extends Fragment {
         tvOption3 = view.findViewById(R.id.tvOption3);
         tvOption4 = view.findViewById(R.id.tvOption4);
         tvQuestion = view.findViewById(R.id.tvQuestion);
-        tvPoints = view.findViewById(R.id.tvPoints);
         btnNext = view.findViewById(R.id.btnNext);
         ivQuestion = view.findViewById(R.id.ivQuestion);
         lottie_timer = view.findViewById(R.id.lottie_timer);
+        recommendation_1 = view.findViewById(R.id.recommendation_1);
+        recommendation_2 = view.findViewById(R.id.recommendation_2);
 
         if (getArguments() != null) {
             quizId = getArguments().getString("quizId");
@@ -111,7 +113,7 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void startTimer() {
-        CountDownTimer countDownTimer = new CountDownTimer(15000, 1000) {
+        countDownTimer = new CountDownTimer(15000, 1000) {
             @Override
             public void onTick(long l) {
             }
@@ -185,6 +187,9 @@ public class PlayQuizFragment extends Fragment {
         Question question = questions.get(questionIndex);
         tvQuestion.setText(question.getQuestion());
         //Picasso.get().load(question.getImage()).into(ivQuestion);
+        //Picasso.get().load(question.getRecom1()).into(recommendation_1);
+        //Picasso.get().load(question.getRecom2()).into(recommendation_2);
+
         tvOption1.setText(question.getOption1());
         tvOption2.setText(question.getOption2());
         tvOption3.setText(question.getOption3());
@@ -202,7 +207,8 @@ public class PlayQuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isCorrect("a", question.getCorrectOption());
-                tvPoints.setText(correctAns + " Points");
+                lottie_timer.pauseAnimation();
+                countDownTimer.cancel();
             }
         });
 
@@ -210,7 +216,8 @@ public class PlayQuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isCorrect("b", question.getCorrectOption());
-                tvPoints.setText(correctAns + " Points");
+                lottie_timer.pauseAnimation();
+                countDownTimer.cancel();
             }
         });
 
@@ -218,7 +225,8 @@ public class PlayQuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isCorrect("c", question.getCorrectOption());
-                tvPoints.setText(correctAns + " Points");
+                lottie_timer.pauseAnimation();
+                countDownTimer.cancel();
             }
         });
 
@@ -226,7 +234,8 @@ public class PlayQuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isCorrect("d", question.getCorrectOption());
-                tvPoints.setText(correctAns + " Points");
+                lottie_timer.pauseAnimation();
+                countDownTimer.cancel();
             }
         });
 
