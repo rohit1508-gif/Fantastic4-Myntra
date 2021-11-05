@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myntrahackathon.Fragments.LoginFragment;
+import com.example.myntrahackathon.Fragments.PlayQuizFragment;
 
 public class MainActivity extends AppCompatActivity {
 

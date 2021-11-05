@@ -1,6 +1,7 @@
 package com.example.myntrahackathon.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,9 +16,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -40,6 +43,7 @@ public class PlayQuizFragment extends Fragment {
     private int correctAns = 0, questionIndex;
     private Button btnNext;
     private ImageView ivQuestion;
+    LottieAnimationView lottie_timer;
 
     @Nullable
     @Override
@@ -52,7 +56,6 @@ public class PlayQuizFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         questions = new ArrayList<>();
-        tvTimer = view.findViewById(R.id.tvTimer);
         tvOption1 = view.findViewById(R.id.tvOption1);
         tvOption2 = view.findViewById(R.id.tvOption2);
         tvOption3 = view.findViewById(R.id.tvOption3);
@@ -61,6 +64,7 @@ public class PlayQuizFragment extends Fragment {
         tvPoints = view.findViewById(R.id.tvPoints);
         btnNext = view.findViewById(R.id.btnNext);
         ivQuestion = view.findViewById(R.id.ivQuestion);
+        lottie_timer = view.findViewById(R.id.lottie_timer);
 
         if (getArguments() != null) {
             quizId = getArguments().getString("quizId");
@@ -94,7 +98,6 @@ public class PlayQuizFragment extends Fragment {
                 }
                 questionIndex = 0;
                 setQuestion();
-                startTimer();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -108,13 +111,9 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void startTimer() {
-        CountDownTimer countDownTimer = new CountDownTimer(12000, 1000) {
+        CountDownTimer countDownTimer = new CountDownTimer(15000, 1000) {
             @Override
             public void onTick(long l) {
-                int minutes = (int) l / 60000;
-                int seconds = (int) (l % 60000) / 1000;
-                String timeLeft = seconds < 10 ? minutes + " : 0" + seconds : minutes + " : " + seconds;
-                tvTimer.setText(timeLeft);
             }
 
             @Override
@@ -124,6 +123,11 @@ public class PlayQuizFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "Time's up... Moving to next question", Toast.LENGTH_SHORT).show();
                     questionIndex++;
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     setQuestion();
                 }
             }
@@ -131,6 +135,7 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void submitScores() {
+        lottie_timer.pauseAnimation();
         ProgressDialog pd = ProgressDialog.show(getContext(), null, "Quiz over... Submitting your scores");
         // api call
         pd.dismiss();
@@ -168,15 +173,15 @@ public class PlayQuizFragment extends Fragment {
             correctAns++;
     }
 
-    private void setBackground() {
-        tvOption1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.boardcardview));
-        tvOption2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.boardcardview));
-        tvOption3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.boardcardview));
-        tvOption4.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.boardcardview));
+    private void setBackground(Context context) {
+        ViewCompat.setBackgroundTintList(tvOption1, ContextCompat.getColorStateList(context, R.color.option_grey));
+        ViewCompat.setBackgroundTintList(tvOption2, ContextCompat.getColorStateList(context, R.color.option_grey));
+        ViewCompat.setBackgroundTintList(tvOption3, ContextCompat.getColorStateList(context, R.color.option_grey));
+        ViewCompat.setBackgroundTintList(tvOption4, ContextCompat.getColorStateList(context, R.color.option_grey));
     }
 
     private void setQuestion() {
-        setBackground();
+        setBackground(getContext());
         Question question = questions.get(questionIndex);
         tvQuestion.setText(question.getQuestion());
         //Picasso.get().load(question.getImage()).into(ivQuestion);
@@ -188,6 +193,8 @@ public class PlayQuizFragment extends Fragment {
             btnNext.setText("Submit");
         }
         setOnClickListeners(question, questionIndex);
+        lottie_timer.playAnimation();
+        startTimer();
     }
 
     private void setOnClickListeners(Question question, int ind) {
