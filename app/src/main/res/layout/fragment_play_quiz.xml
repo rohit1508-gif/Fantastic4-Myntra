@@ -52,11 +52,12 @@
             android:gravity="center"
             android:maxLines="1"
             android:textAllCaps="false"
+            android:textColor="@color/black"
             android:textSize="17sp"
-            app:backgroundTint="#808787"
+            app:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/ivQuestion"
-            app:strokeColor="@color/purple_500"
-            app:strokeWidth="1dp"
+            app:strokeColor="@color/option_grey"
+            app:strokeWidth="2dp"
             tools:text="Option1" />
 
         <com.google.android.material.button.MaterialButton
@@ -68,11 +69,12 @@
             android:gravity="center"
             android:maxLines="1"
             android:textAllCaps="false"
+            android:textColor="@color/black"
             android:textSize="17sp"
-            app:backgroundTint="#808787"
+            app:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/tvOption1"
-            app:strokeColor="@color/purple_500"
-            app:strokeWidth="1dp"
+            app:strokeColor="@color/option_grey"
+            app:strokeWidth="2dp"
             tools:text="Option2" />
 
         <com.google.android.material.button.MaterialButton
@@ -84,11 +86,12 @@
             android:gravity="center"
             android:maxLines="1"
             android:textAllCaps="false"
+            android:textColor="@color/black"
             android:textSize="17sp"
-            app:backgroundTint="#808787"
+            app:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/tvOption2"
-            app:strokeColor="@color/purple_500"
-            app:strokeWidth="1dp"
+            app:strokeColor="@color/option_grey"
+            app:strokeWidth="2dp"
             tools:text="Option3" />
 
         <com.google.android.material.button.MaterialButton
@@ -100,11 +103,12 @@
             android:gravity="center"
             android:maxLines="1"
             android:textAllCaps="false"
+            android:textColor="@color/black"
             android:textSize="17sp"
-            app:backgroundTint="#808787"
+            app:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/tvOption3"
-            app:strokeColor="@color/purple_500"
-            app:strokeWidth="1dp"
+            app:strokeColor="@color/option_grey"
+            app:strokeWidth="2dp"
             tools:text="Option4" />
 
         <com.google.android.material.button.MaterialButton
