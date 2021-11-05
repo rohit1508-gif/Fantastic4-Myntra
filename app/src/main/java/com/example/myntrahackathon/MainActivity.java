@@ -12,7 +12,8 @@ import com.example.myntrahackathon.Fragments.RedeemFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String fragment="";
+    public static String fragment = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,29 +31,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(fragment.equals("Home")){
+        if (fragment.equals("Home")) {
             Intent a = new Intent(Intent.ACTION_MAIN);
             a.addCategory(Intent.CATEGORY_HOME);
             a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(a);
-        }
-        else if(fragment.equals("ActiveQuiz")){
+        } else if (fragment.equals("ActiveQuiz")) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
                     new HomeFragment()).commit();
-        }
-        else if(fragment.equals("Exchange")){
+        } else if (fragment.equals("Exchange")) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
                     new RedeemFragment()).commit();
-        }
-        else if(fragment.equals("Leaderboard")){
+        } else if (fragment.equals("Leaderboard")) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
                     new HomeFragment()).commit();
-        }
-        else if(fragment.equals("Redeem")){
+        } else if (fragment.equals("Redeem")) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
                     new HomeFragment()).commit();
-        }
-        else if(fragment.equals("NoWork")){
+        } else if (fragment.equals("NoWork")) {
 
         }
     }
