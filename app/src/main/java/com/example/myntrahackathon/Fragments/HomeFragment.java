@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.R;
 
 public class HomeFragment extends Fragment {
@@ -23,7 +24,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        MainActivity.fragment="Home";
         view.findViewById(R.id.button_quiz).setOnClickListener(v -> {
             if (getFragmentManager() != null) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.Adapter.LeaderboardAdapter;
+import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.ModalClasses.LeaderboardUser;
 import com.example.myntrahackathon.R;
 
@@ -42,7 +43,7 @@ public class LeaderboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        MainActivity.fragment="Leaderboard";
         users = new ArrayList<>();
 
         recyclerView = view.findViewById(R.id.rvLeaderboard);

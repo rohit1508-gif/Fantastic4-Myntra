@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myntrahackathon.Adapter.SelectQuizAdapter;
+import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.ModalClasses.QuizInfo;
 import com.example.myntrahackathon.R;
 
@@ -35,7 +36,7 @@ public class ActiveQuizzesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         requireActivity().setTitle("Active Quizzes");
-
+        MainActivity.fragment="ActiveQuiz";
         quizzes = new ArrayList<>();
 
         recyclerView = view.findViewById(R.id.rvSelectQuiz);

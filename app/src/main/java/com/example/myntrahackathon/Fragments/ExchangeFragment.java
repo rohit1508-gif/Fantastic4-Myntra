@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.R;
 
 public class ExchangeFragment extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -31,7 +32,7 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        MainActivity.fragment="Exchange";
         Spinner spinner = (Spinner) view.findViewById(R.id.clothes_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.clothes_array,
                 android.R.layout.simple_spinner_item);

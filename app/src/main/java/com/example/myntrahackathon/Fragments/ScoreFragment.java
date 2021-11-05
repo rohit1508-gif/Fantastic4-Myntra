@@ -1,5 +1,6 @@
 package com.example.myntrahackathon.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,17 @@ import androidx.fragment.app.FragmentTransaction;
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myntrahackathon.MainActivity;
+import com.example.myntrahackathon.ModalClasses.Question;
 import com.example.myntrahackathon.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ScoreFragment extends Fragment {
     private String quizId, quizName;
@@ -35,6 +44,8 @@ public class ScoreFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        MainActivity.fragment="NoWork";
+        if (getArguments() != null) {
         initializeViews(view);
         updateUIForUploading();
         getArgumentsFromBundle();
