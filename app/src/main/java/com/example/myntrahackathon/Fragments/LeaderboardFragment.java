@@ -53,7 +53,7 @@ public class LeaderboardFragment extends Fragment {
     public void getLeaderBoard() {
         String url = "https://fantastic4-myntra.herokuapp.com/leaderboard";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        ProgressDialog pd = ProgressDialog.show(getContext(), null, "Please wait");
+        ProgressDialog pd = ProgressDialog.show(getContext(), null, "Fetching the leaders...");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

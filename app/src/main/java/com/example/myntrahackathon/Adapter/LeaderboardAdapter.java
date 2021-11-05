@@ -1,9 +1,9 @@
 package com.example.myntrahackathon.Adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,7 +25,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     @NonNull
     @Override
     public LeaderboardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_leaderboard_user,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_leaderboard_user, parent, false);
         return new LeaderboardAdapter.ViewHolder(view);
     }
 
@@ -34,6 +34,17 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         LeaderboardUser user = users.get(position);
         holder.tvName.setText(user.getName());
         holder.tvScore.setText(Integer.toString(user.getScore()));
+
+        if (position == 0) {
+            holder.ivPosition.setImageResource(R.drawable.first);
+            holder.ivPosition.setVisibility(View.VISIBLE);
+        } else if (position == 1) {
+            holder.ivPosition.setImageResource(R.drawable.second);
+            holder.ivPosition.setVisibility(View.VISIBLE);
+        } else if (position == 2) {
+            holder.ivPosition.setImageResource(R.drawable.third);
+            holder.ivPosition.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -43,11 +54,13 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvScore;
+        ImageView ivPosition;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvScore = itemView.findViewById(R.id.tvScore);
+            ivPosition = itemView.findViewById(R.id.ivPosition);
         }
     }
 }
