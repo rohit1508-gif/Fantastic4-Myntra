@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myntrahackathon.Adapter.ExchangeCardAdapter;
+import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.ModalClasses.ExchangeCard;
 import com.example.myntrahackathon.R;
 
@@ -33,7 +34,7 @@ public class RedeemFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        MainActivity.fragment="Redeem";
         cards = new ArrayList<>();
         cards.add(new ExchangeCard("", "Exchange Card", "Use before 24 December 2021"));
         cards.add(new ExchangeCard("", "Get 20% discount", "Expired on 4 August 2021"));
