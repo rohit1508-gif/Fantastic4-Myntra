@@ -2,6 +2,7 @@ package com.example.myntrahackathon.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -209,10 +210,14 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void setBackground(Context context) {
-        ViewCompat.setBackgroundTintList(tvOption1, ContextCompat.getColorStateList(context, R.color.white));
-        ViewCompat.setBackgroundTintList(tvOption2, ContextCompat.getColorStateList(context, R.color.white));
-        ViewCompat.setBackgroundTintList(tvOption3, ContextCompat.getColorStateList(context, R.color.white));
-        ViewCompat.setBackgroundTintList(tvOption4, ContextCompat.getColorStateList(context, R.color.white));
+        tvOption1.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
+        tvOption2.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
+        tvOption3.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
+        tvOption4.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
+//        ViewCompat.setBackgroundTintList(tvOption1, ContextCompat.getColorStateList(context, R.color.white));
+//        ViewCompat.setBackgroundTintList(tvOption2, ContextCompat.getColorStateList(context, R.color.white));
+//        ViewCompat.setBackgroundTintList(tvOption3, ContextCompat.getColorStateList(context, R.color.white));
+//        ViewCompat.setBackgroundTintList(tvOption4, ContextCompat.getColorStateList(context, R.color.white));
     }
 
     private void setQuestion() {
