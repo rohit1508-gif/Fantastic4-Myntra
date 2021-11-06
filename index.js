@@ -1,166 +1,80 @@
 require('dotenv').config();
 const express = require('express');
 const http = require('http');
-const pool = require('./config/database');
-var flash             = require('connect-flash');
-var crypto            = require('crypto');
-var passport          = require('passport');
-var LocalStrategy     = require('passport-local').Strategy;
-var sess              = require('express-session');
-var Store             = require('express-session').Store;
-var BetterMemoryStore = require(__dirname + '/memory');
+const pool = require('./database');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var path = require('path');
+// var BetterMemoryStore = require(__dirname + '/memory');
 
-const app = express();
+
+var app = express();
+
+
+// app.use(express.json());
+// app.use(express.urlencoded());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+// app.use(require('connect').bodyParser());
+
+
+
 //const routes = require('./router');
 
 const PORT = process.env.PORT || 3300;
 const server = http.createServer(app);
 
 
-var store = new BetterMemoryStore({ expires: 60 * 60 * 1000, debug: true });
-
-app.use(sess({
-
-   name: 'JSESSION',
-
-   secret: 'MYSECRETISVERYSECRET',
-
-   store:  store,
-
-   resave: true,
-
-   saveUninitialized: true
-
-}));
-
-app.use(flash());
-
-app.use(passport.initialize());
-
-app.use(passport.session());
-
-passport.use('local', new LocalStrategy({
-
-    usernameField: 'username',
-  
-    passwordField: 'password',
-  
-    passReqToCallback: true //passback entire req to call back
-  } , function (req, username, password, done){
-  
-  
-        if(!username || !password ) { return done(null, false, req.flash('message','All fields are required.')); }
-  
-        var salt = '7fa73b47df808d36c5fe328546ddef8b9011b2c6';
-        pool.connect(function(err) {
-            if (err) throw err;
-        pool.query("select * from users where username = ?", [username], function(err, rows){
-  
-            console.log(err); console.log(rows);
-  
-          if (err) return done(req.flash('message',err));
-  
-          if(!rows.length){ return done(null, false, req.flash('message','Invalid username or password.')); }
-  
-          salt = salt+''+password;
-  
-          var encPassword = crypto.createHash('sha1').update(salt).digest('hex');
-  
-  
-          var dbPassword  = rows[0].password;
-  
-          if(!(dbPassword == encPassword)){
-  
-              return done(null, false, req.flash('message','Invalid username or password.'));
-  
-           }
-  
-          return done(null, rows[0]);
-  
-        });
-    })
-      }
-  
-  ));
-
-  passport.serializeUser(function(user, done){
-
-    done(null, user.id);
-
-});
-
-passport.deserializeUser(function(id, done){
-    pool.connect(function(err) {
-        if (err) throw err;
-    pool.query("select * from tbl_users where id = "+ id, function (err, rows){
-
-        done(err, rows[0]);
-
-    });
-  })
-});
-
 app.get('/',  (req, res) =>{
     res.send('Hello World!!');
 })
 
-app.get('/signin', function(req, res){
-    res.render('logged in');
-  });
-
-app.post("/signin", passport.authenticate('local', {
-
-    successRedirect: '/',
-
-    failureRedirect: '/signin',
-
-    failureFlash: true
-
-}), function(req, res, info){
-
-    res.render('login');
-
-});
 
 app.get('/quiz', (req, res) => {
     pool.query("SELECT * FROM Quiz", function (err, result, fields) {
         if (err) throw err;
         res.send(result);
       })
-    res.redirect('/quiz/game');
+    // res.redirect('/quiz/game');
 })
 
-app.post('/quiz/game/:id/return', (req, res) => {
+app.put('/quiz/game/:id/return', (req, res) => {
     
-    pool.connect(function(err) {
+    
         let score = req.body.score;
-        if (err) throw err;
+        console.log(score);
         var id = req.params.id;
-        pool.connect(function(err) {
+        pool.getConnection(function(err) {
             if (err) throw err;
-            var sql = "UPDATE users SET score = ? WHERE user_id = ?"+ (score, id);
-            pool.query(sql, function (err, result) {
+            var sql = "UPDATE users SET score = ? WHERE user_id = ?";
+            pool.query(sql, [score, id] ,function (err, result) {
               if (err) throw err;
               console.log(result.affectedRows + " record(s) updated");
             });
           });
     })
-})
 
 app.get('/leaderboard', (req, res) => {
      
-    pool.query("SELECT * FROM users order by score desc", function (err, result, fields) {
+    pool.query("SELECT * FROM users", function (err, result, fields) {
         if (err) throw err;
         res.send(result);
       })
 })
 
-app.get('/quiz/game/return', (req, res) => {
-    pool.query("SELECT score FROM users", function (err, result, fields) {
-        if (err) throw err;
-        res.send(score);
-      })
-})
+// app.get('/quiz/game/return', (req, res) => {
+//     pool.query("SELECT score FROM users", function (err, result, fields) {
+//         if (err) throw err;
+//         res.send(score);
+//       })
+// })
 
 app.get('/quiz/:id/game', (req, res) => {
 
@@ -193,6 +107,40 @@ app.get('/quiz/:id/game', (req, res) => {
           })
     }
     
+})
+
+app.get('/login', function(request, response) {
+    if (request.session.loggedin) {
+        response.send('Welcome back, ' + request.session.username + '!');
+    } else {
+        response.send('Please login to view this page!');
+    }
+    response.end();
+});
+
+app.post('/login',  (request, response) =>{
+    console.log(request.body);
+    let username = request.body.username;
+    let password = request.body.password;
+    console.log(username);
+    console.log(password);
+        if (username && password) {
+        pool.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
+            console.log(username);
+            if (results.length > 0) {
+                request.session.loggedin = true;
+                request.session.username = username;
+                console.log(username);
+                response.redirect('/');
+            } else {
+                response.send('Incorrect Username and/or Password!');
+            }           
+            response.end();
+        });
+    } else {
+        response.send('Please enter Username and Password!');
+        response.end();
+    }
 })
 
 function isAuthenticated(req, res, next) {
