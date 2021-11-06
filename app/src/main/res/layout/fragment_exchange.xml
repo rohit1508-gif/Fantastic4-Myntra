@@ -20,11 +20,11 @@
         android:id="@+id/clothes_spinner"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:backgroundTint="#E3D9D9"
-        android:backgroundTintMode="add"
         android:layout_marginHorizontal="50dp"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/spinner_background"
+        android:paddingStart="15dp" />
 
     <EditText
         android:id="@+id/etAddress"
@@ -46,7 +46,7 @@
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/completed"
-        app:lottie_speed="1.7" />
+        app:lottie_speed="2" />
 
     <TextView
         android:id="@+id/tvScheduled"
@@ -76,7 +76,7 @@
         android:id="@+id/btn_schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/option_grey"
         android:clickable="false"
         android:paddingHorizontal="35dp"
