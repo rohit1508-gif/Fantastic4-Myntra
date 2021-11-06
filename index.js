@@ -149,7 +149,7 @@ app.post('/quiz/game/:id/return', (req, res) => {
 
 app.get('/leaderboard',isAuthenticated, (req, res) => {
      
-    pool.query("SELECT * FROM users", function (err, result, fields) {
+    pool.query("SELECT * FROM users order by score desc", function (err, result, fields) {
         if (err) throw err;
         res.send(result);
       })
@@ -213,4 +213,12 @@ app.use(express.json());
 server.listen(PORT, () => {
     console.log('Server up and running on ', PORT);
 
+<<<<<<< HEAD
 });
+=======
+server.listen(PORT,  function() {
+    console.log("here is the port");
+    console.log("portttttttt"+ PORT);
+    console.log("Listening on Port 3300");
+});
+>>>>>>> 6ece9b79521183e11b383e766f6e0a2ea7175f7d
