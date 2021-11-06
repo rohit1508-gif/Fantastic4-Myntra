@@ -79,7 +79,7 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void getQuestion() {
-        String url = "https://fantastic4-myntra.herokuapp.com/quiz/game";
+        String url = "https://fantastic4-myntra.herokuapp.com/quiz/:" + quizId + "/game";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         ProgressDialog pd = ProgressDialog.show(getContext(), null, "Loading quiz...");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {

@@ -7,19 +7,13 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Tap on any quiz to play"
-        android:textSize="24sp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSelectQuiz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
         tools:listitem="@layout/item_quiz_select" />
 
 </LinearLayout>

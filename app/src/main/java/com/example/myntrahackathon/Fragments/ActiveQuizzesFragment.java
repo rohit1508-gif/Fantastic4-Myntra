@@ -70,7 +70,7 @@ public class ActiveQuizzesFragment extends Fragment {
                     QuizInfo quizInfo = new QuizInfo(
                             obj.optString("Quiz_name"),
                             obj.optString("Quiz_id"),
-                            obj.optString("Quiz_description")
+                            obj.optString("quiz_desc")
                     );
                     quizzes.add(quizInfo);
                 }
