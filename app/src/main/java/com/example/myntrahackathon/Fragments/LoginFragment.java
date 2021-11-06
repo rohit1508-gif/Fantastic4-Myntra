@@ -48,7 +48,7 @@ public class LoginFragment extends Fragment {
                         transaction.replace(R.id.fragmentContainer, new HomeFragment());
                         transaction.commit();
                     }
-                }, 1000);
+                }, 2000);
 
             } else {
                 progressBar.setVisibility(View.GONE);

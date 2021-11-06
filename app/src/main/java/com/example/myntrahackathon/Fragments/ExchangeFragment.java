@@ -92,7 +92,7 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
             tvScheduled.setVisibility(View.VISIBLE);
             tvThankYou.setVisibility(View.VISIBLE);
             btnContinue.setVisibility(View.VISIBLE);
-        }, 900);
+        }, 1300);
     }
 
     private void setSpinner() {
