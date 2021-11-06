@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.R;
 
 public class LoginFragment extends Fragment {
@@ -28,7 +29,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        MainActivity.goToFragment = "CloseApplication";
         EditText etEmail = view.findViewById(R.id.etEmail);
         EditText etPassword = view.findViewById(R.id.etPassword);
         ProgressBar progressBar = view.findViewById(R.id.progressBarLogin);

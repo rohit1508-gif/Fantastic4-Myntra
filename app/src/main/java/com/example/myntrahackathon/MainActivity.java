@@ -2,6 +2,7 @@ package com.example.myntrahackathon;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,7 +13,9 @@ import com.example.myntrahackathon.Fragments.RedeemFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String fragment = "";
+    public static String goToFragment = "CloseApplication";
+    private long backPressedTime = 0;
+    private Toast backToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,25 +34,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (fragment.equals("Home")) {
-            Intent a = new Intent(Intent.ACTION_MAIN);
-            a.addCategory(Intent.CATEGORY_HOME);
-            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(a);
-        } else if (fragment.equals("ActiveQuiz")) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
-                    new HomeFragment()).commit();
-        } else if (fragment.equals("Exchange")) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
-                    new RedeemFragment()).commit();
-        } else if (fragment.equals("Leaderboard")) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
-                    new HomeFragment()).commit();
-        } else if (fragment.equals("Redeem")) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
-                    new HomeFragment()).commit();
-        } else if (fragment.equals("NoWork")) {
-
+        switch (goToFragment) {
+            case "HomeFragment":
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.fragmentContainer,
+                                new HomeFragment()).commit();
+                break;
+            case "RedeemFragment":
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
+                        new RedeemFragment()).commit();
+                break;
+            case "CloseApplication":
+                if (backPressedTime + 2000 > System.currentTimeMillis()) {
+                    backToast.cancel();
+                    finishAffinity();
+                    finishActivity(1);
+                } else {
+                    backToast = Toast.makeText(getBaseContext(), "Press again to exit", Toast.LENGTH_SHORT);
+                    backToast.show();
+                }
+                backPressedTime = System.currentTimeMillis();
         }
     }
 }

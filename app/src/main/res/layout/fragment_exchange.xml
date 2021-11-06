@@ -7,7 +7,6 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvIntro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -24,10 +23,22 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="30dp" />
 
+    <EditText
+        android:id="@+id/etAddress"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginHorizontal="30dp"
+        android:background="#E6F1F1"
+        android:gravity="start"
+        android:hint="Address"
+        android:padding="10dp"
+        android:textSize="15sp" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_exchange"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:visibility="gone"
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/completed"
@@ -41,11 +52,11 @@
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
-        android:text="Your pickup request has been scheduled. Within 2 working days, our delivery partner would reach you for quality check and pickup. You'll receive your discount voucher once this process is completed."
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_submit"
+        android:id="@+id/btn_schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -67,6 +78,7 @@
         android:paddingHorizontal="35dp"
         android:text="Continue Playing"
         android:textAllCaps="false"
+        android:visibility="gone"
         app:cornerRadius="3dp"
         app:strokeColor="@color/purple_500"
         app:strokeWidth="1dp" />

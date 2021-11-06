@@ -57,7 +57,7 @@ public class PlayQuizFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MainActivity.fragment="NoWork";
+        MainActivity.goToFragment ="NoAction";
         questions = new ArrayList<>();
         tvOption1 = view.findViewById(R.id.tvOption1);
         tvOption2 = view.findViewById(R.id.tvOption2);

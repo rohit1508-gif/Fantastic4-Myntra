@@ -18,7 +18,6 @@ import com.example.myntrahackathon.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ActiveQuizzesFragment extends Fragment {
 
@@ -36,7 +35,7 @@ public class ActiveQuizzesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         requireActivity().setTitle("Active Quizzes");
-        MainActivity.fragment="ActiveQuiz";
+        MainActivity.goToFragment ="HomeFragment";
         quizzes = new ArrayList<>();
 
         recyclerView = view.findViewById(R.id.rvSelectQuiz);

@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MainActivity.fragment="Home";
+        MainActivity.goToFragment = "NoAction";
         view.findViewById(R.id.button_quiz).setOnClickListener(v -> {
             if (getFragmentManager() != null) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

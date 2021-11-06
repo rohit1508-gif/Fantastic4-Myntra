@@ -43,7 +43,7 @@ public class LeaderboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MainActivity.fragment="Leaderboard";
+        MainActivity.goToFragment ="Leaderboard";
         users = new ArrayList<>();
 
         recyclerView = view.findViewById(R.id.rvLeaderboard);

@@ -34,7 +34,7 @@ public class RedeemFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MainActivity.fragment="Redeem";
+        MainActivity.goToFragment ="HomeFragment";
         cards = new ArrayList<>();
         cards.add(new ExchangeCard("", "Exchange Card", "Use before 24 December 2021"));
         cards.add(new ExchangeCard("", "Get 20% discount", "Expired on 4 August 2021"));
