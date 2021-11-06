@@ -41,7 +41,7 @@
         android:id="@+id/lottie_exchange"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
         android:visibility="gone"
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
@@ -67,7 +67,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
-        android:text="Your old clothes would be donated to the poor. Our whole team would like to thank you for helping the society."
+        android:text="Your old clothes would be donated to the poor. Our whole team would like to thank you for your contribution towards the society."
         android:textSize="16sp"
         android:textStyle="bold"
         android:visibility="gone" />

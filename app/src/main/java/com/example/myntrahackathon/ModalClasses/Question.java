@@ -5,9 +5,9 @@ public class Question {
     String question;
     String option1, option2, option3, option4;
     String correctOption;
-    String recom1, recom2;
+    LinkPreview recom1, recom2;
 
-    public Question(String question, String image, String option1, String option2, String option3, String option4, String correctOption, String recom1, String recom2) {
+    public Question(String question, String image, String option1, String option2, String option3, String option4, String correctOption, LinkPreview recom1, LinkPreview recom2) {
         this.image = image;
         this.question = question;
         this.option1 = option1;
@@ -47,11 +47,11 @@ public class Question {
         return correctOption;
     }
 
-    public String getRecom1() {
+    public LinkPreview getRecom1() {
         return recom1;
     }
 
-    public String getRecom2() {
+    public LinkPreview getRecom2() {
         return recom2;
     }
 }

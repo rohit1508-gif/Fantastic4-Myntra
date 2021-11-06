@@ -28,12 +28,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.MainActivity;
+import com.example.myntrahackathon.ModalClasses.LinkPreview;
 import com.example.myntrahackathon.ModalClasses.Question;
 import com.example.myntrahackathon.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,6 +94,8 @@ public class PlayQuizFragment extends Fragment {
                     pd.dismiss();
                 for (int i = 0; i < response.length(); i++) {
                     JSONObject obj = response.optJSONObject(i);
+                    LinkPreview recommendation_1 = getLinkDetails(obj.optString("Recom_1"));
+                    LinkPreview recommendation_2 = getLinkDetails(obj.optString("Recom_2"));
                     Question question = new Question(
                             obj.optString("Question"),
                             obj.optString("Ques_image"),
@@ -96,8 +104,8 @@ public class PlayQuizFragment extends Fragment {
                             obj.optString("Option_3"),
                             obj.optString("Option_4"),
                             obj.optString("Correct_ans"),
-                            obj.optString("Recom_1"),
-                            obj.optString("Recom_2")
+                            recommendation_1,
+                            recommendation_2
                     );
                     questions.add(question);
                 }
@@ -113,6 +121,29 @@ public class PlayQuizFragment extends Fragment {
             }
         });
         requestQueue.add(request);
+    }
+
+    private LinkPreview getLinkDetails(String link) {
+        try {
+            Document doc = Jsoup.connect(link).get();
+            LinkPreview linkPreview = new LinkPreview();
+            linkPreview.setUrl(link);
+            linkPreview.setTitle(doc.title());
+            linkPreview.setDescription(doc.text());
+            Element image = doc.select("meta[property*='og:image:secure_url']").first();
+            if (image != null) {
+                linkPreview.setImage(image.absUrl("content"));
+            } else {
+                image = doc.select("meta[property*='og:image']").first();
+                if (image != null) {
+                    linkPreview.setImage(image.absUrl("content"));
+                }
+            }
+            return linkPreview;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void startTimer() {
@@ -188,7 +219,7 @@ public class PlayQuizFragment extends Fragment {
         setBackground(getContext());
         Question question = questions.get(questionIndex);
         tvQuestion.setText(question.getQuestion());
-        //ivQuestion.setImageBitmap(question.getImage());
+        Picasso.get().load(question.getRecom1().getImage()).resize(150, 150).into(ivQuestion);
         tvOption1.setText(question.getOption1());
         tvOption2.setText(question.getOption2());
         tvOption3.setText(question.getOption3());
@@ -196,8 +227,8 @@ public class PlayQuizFragment extends Fragment {
         if (questionIndex == 4) {
             btnNext.setText("Submit");
         }
-        //Picasso.get().load(question.getRecom1()).resize(200, 200).into(recommendation_1);
-        //Picasso.get().load(question.getRecom2()).resize(200, 200).into(recommendation_2);
+        Picasso.get().load(question.getRecom1().getImage()).resize(200, 200).into(recommendation_1);
+        Picasso.get().load(question.getRecom2().getImage()).resize(200, 200).into(recommendation_2);
         setOnClickListeners(question, questionIndex);
         lottie_timer.playAnimation();
         startTimer();
