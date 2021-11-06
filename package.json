@@ -18,9 +18,15 @@
   },
   "homepage": "https://github.com/rohit1508-gif/Fantastic4-Myntra#readme",
   "dependencies": {
+    "connect-flash": "^0.1.1",
+    "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "memory": "0.0.3",
     "mysql": "^2.18.1",
+    "passport": "^0.5.0",
+    "passport-local": "^1.0.0",
     "socket.io": "^4.3.1"
   }
 }
