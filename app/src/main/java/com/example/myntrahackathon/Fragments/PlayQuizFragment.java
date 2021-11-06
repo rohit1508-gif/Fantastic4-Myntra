@@ -30,7 +30,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.ModalClasses.Question;
 import com.example.myntrahackathon.R;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -79,7 +78,7 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void getQuestion() {
-        String url = "https://fantastic4-myntra.herokuapp.com/quiz/:" + quizId + "/game";
+        String url = "https://fantastic4-myntra.herokuapp.com/quiz/" + quizId + "/game";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         ProgressDialog pd = ProgressDialog.show(getContext(), null, "Loading quiz...");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -189,7 +188,7 @@ public class PlayQuizFragment extends Fragment {
         setBackground(getContext());
         Question question = questions.get(questionIndex);
         tvQuestion.setText(question.getQuestion());
-        Picasso.get().load(question.getImage()).into(ivQuestion);
+        //ivQuestion.setImageBitmap(question.getImage());
         tvOption1.setText(question.getOption1());
         tvOption2.setText(question.getOption2());
         tvOption3.setText(question.getOption3());
@@ -197,8 +196,8 @@ public class PlayQuizFragment extends Fragment {
         if (questionIndex == 4) {
             btnNext.setText("Submit");
         }
-        Picasso.get().load(question.getRecom1()).into(recommendation_1);
-        Picasso.get().load(question.getRecom2()).into(recommendation_2);
+        //Picasso.get().load(question.getRecom1()).resize(200, 200).into(recommendation_1);
+        //Picasso.get().load(question.getRecom2()).resize(200, 200).into(recommendation_2);
         setOnClickListeners(question, questionIndex);
         lottie_timer.playAnimation();
         startTimer();
