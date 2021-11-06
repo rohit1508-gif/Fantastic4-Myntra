@@ -23,28 +23,31 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
     Button submit;
     String cloth;
 
+    Spinner spinner;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_active_quizzes, container, false);
+        return inflater.inflate(R.layout.fragment_exchange, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MainActivity.fragment="Exchange";
-        Spinner spinner = (Spinner) view.findViewById(R.id.clothes_spinner);
+        MainActivity.fragment = "Exchange";
+
+        spinner = view.findViewById(R.id.clothes_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.clothes_array,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         submit = view.findViewById(R.id.btn_submit);
-        submit.setClickable(false);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Your exchange for " + cloth +" has been scheduled.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Your exchange for " + cloth + " has been scheduled.", Toast.LENGTH_SHORT).show();
                 backButton();
             }
         });
@@ -58,8 +61,10 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        cloth = (String) parent.getItemAtPosition(position);
-        if(!cloth.isEmpty()){
+        if(position == 0)
+            Toast.makeText(getContext(), "Please choose an item", Toast.LENGTH_SHORT).show();
+        else {
+            cloth = (String) parent.getItemAtPosition(position);
             submit.setClickable(true);
         }
     }
@@ -68,7 +73,8 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-    public void backButton(){
+
+    public void backButton() {
         Fragment redeemFragment = new RedeemFragment();
         if (getFragmentManager() != null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();

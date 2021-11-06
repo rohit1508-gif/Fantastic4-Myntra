@@ -4,10 +4,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="clothes_array">
+        <item>Choose</item>
         <item>Jeans</item>
+        <item>Shirt</item>
+        <item>Saree</item>
+        <item>Bodycon dress</item>
         <item>T-shirt</item>
-        <item>Shirts</item>
         <item>Shorts</item>
+        <item>Frock</item>
+        <item>Others</item>
     </string-array>
 
 </resources>
