@@ -73,6 +73,7 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
     }
 
     private void adaptUiAfterSchedule() {
+        MainActivity.goToFragment = "NoAction";
         etAddress.setVisibility(View.GONE);
         btnSchedule.setVisibility(View.GONE);
         spinner.setVisibility(View.GONE);
