@@ -42,7 +42,11 @@ app.get('/quiz', (req, res) => {
         if (err) throw err;
         res.send(result);
       })
+<<<<<<< HEAD
     // res.redirect('/quiz/game');
+=======
+   
+>>>>>>> dd0cdd315de49ac0519c8377b5501986f7f9b3ea
 })
 
 app.put('/quiz/game/:id/return', (req, res) => {
