@@ -33,6 +33,7 @@ public class RedeemFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle("Myntra Play");
         MainActivity.goToFragment = "HomeFragment";
         cards = new ArrayList<>();
         cards.add(new ExchangeCard("Exchange Card -\n   upto 80% off on denims", "Redeem before 24 Dec 2021"));

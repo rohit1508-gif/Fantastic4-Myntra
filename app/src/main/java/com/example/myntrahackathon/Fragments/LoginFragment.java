@@ -29,6 +29,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle("Myntra Play");
         MainActivity.goToFragment = "CloseApplication";
         EditText etEmail = view.findViewById(R.id.etEmail);
         EditText etPassword = view.findViewById(R.id.etPassword);
@@ -48,7 +49,7 @@ public class LoginFragment extends Fragment {
                         transaction.replace(R.id.fragmentContainer, new HomeFragment());
                         transaction.commit();
                     }
-                }, 2000);
+                }, 1700);
 
             } else {
                 progressBar.setVisibility(View.GONE);

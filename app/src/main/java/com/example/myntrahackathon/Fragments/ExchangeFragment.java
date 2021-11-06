@@ -41,6 +41,7 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle("Myntra Play");
         MainActivity.goToFragment = "RedeemFragment";
 
         spinner = view.findViewById(R.id.clothes_spinner);
@@ -92,7 +93,7 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
             tvScheduled.setVisibility(View.VISIBLE);
             tvThankYou.setVisibility(View.VISIBLE);
             btnContinue.setVisibility(View.VISIBLE);
-        }, 1300);
+        }, 1100);
     }
 
     private void setSpinner() {
