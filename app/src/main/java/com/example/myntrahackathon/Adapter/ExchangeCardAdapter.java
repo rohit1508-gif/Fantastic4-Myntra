@@ -1,25 +1,20 @@
 package com.example.myntrahackathon.Adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myntrahackathon.Fragments.ExchangeFragment;
-import com.example.myntrahackathon.Fragments.PlayQuizFragment;
 import com.example.myntrahackathon.ModalClasses.ExchangeCard;
 import com.example.myntrahackathon.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,18 +37,14 @@ public class ExchangeCardAdapter extends RecyclerView.Adapter<ExchangeCardAdapte
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         ExchangeCard card = list.get(position);
-        Picasso.get().load(card.getImage()).into(holder.ivCardLogo);
         holder.tvCardName.setText(card.getTitle());
-        holder.mview.setOnClickListener(new View.OnClickListener() {
+        holder.tvCardStatus.setText(card.getStatus());
+        holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list.remove(position);
-                notifyItemRemoved(position);
-
-                Fragment someFragment = new ExchangeFragment();
                 FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.fragmentContainer, someFragment );
+                transaction.replace(R.id.fragmentContainer, new ExchangeFragment());
                 transaction.commit();
             }
         });
@@ -65,15 +56,14 @@ public class ExchangeCardAdapter extends RecyclerView.Adapter<ExchangeCardAdapte
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
-        ImageView ivCardLogo;
         TextView tvCardName, tvCardStatus;
-        View mview;
+        View view;
+
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            ivCardLogo = itemView.findViewById(R.id.ivCardLogo);
             tvCardName = itemView.findViewById(R.id.tvCardName);
             tvCardStatus = itemView.findViewById(R.id.tvCardStatus);
-            mview = itemView;
+            view = itemView;
         }
     }
 }

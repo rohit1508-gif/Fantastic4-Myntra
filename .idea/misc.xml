@@ -6,6 +6,7 @@
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/drawable/button.xml" value="0.25555555555555554" />
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/drawable/button_background.xml" value="0.24537037037037038" />
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/drawable/layout_button.xml" value="0.24537037037037038" />
+        <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/drawable/layout_exchange_card.xml" value="0.25555555555555554" />
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/fragment_active_quizzes.xml" value="0.25416666666666665" />
@@ -19,7 +20,7 @@
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/fragments_board.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/fragments_home.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/fragments_quiz.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/item_exchange_card.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/item_exchange_card.xml" value="0.264" />
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/item_leaderboard_user.xml" value="0.2" />
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/item_quiz_select.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Abhinav Rishi/Documents/git/Fantastic4-Myntra/app/src/main/res/layout/item_redeem.xml" value="0.25416666666666665" />

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myntrahackathon.Adapter.ExchangeCardAdapter;
@@ -34,16 +33,15 @@ public class RedeemFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MainActivity.goToFragment ="HomeFragment";
+        MainActivity.goToFragment = "HomeFragment";
         cards = new ArrayList<>();
-        cards.add(new ExchangeCard("", "Exchange Card", "Use before 24 December 2021"));
-        cards.add(new ExchangeCard("", "Get 20% discount", "Expired on 4 August 2021"));
-        cards.add(new ExchangeCard("", "", "Use before 24 December 2021"));
+        cards.add(new ExchangeCard("Exchange Card -\n   upto 80% off on denims", "Redeem before 24 Dec 2021"));
+        cards.add(new ExchangeCard("Exchange Card -\n   upto 40% off on anything", "Redeem before 31 Dec 2021"));
+        cards.add(new ExchangeCard("Exchange Card -\n   upto 65% off on sarees", "Redeem before 12 Jan 2022"));
 
         adapter = new ExchangeCardAdapter(cards, getContext());
         recyclerView = view.findViewById(R.id.rvExchangeCard);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(adapter);
     }
 }

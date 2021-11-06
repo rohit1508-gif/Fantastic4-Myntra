@@ -35,7 +35,7 @@ public class ActiveQuizzesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         requireActivity().setTitle("Active Quizzes");
-        MainActivity.goToFragment ="HomeFragment";
+        MainActivity.goToFragment = "HomeFragment";
         quizzes = new ArrayList<>();
 
         recyclerView = view.findViewById(R.id.rvSelectQuiz);
