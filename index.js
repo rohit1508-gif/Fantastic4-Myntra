@@ -67,7 +67,7 @@ app.put('/quiz/game/:id/return', (req, res) => {
 
 app.get('/leaderboard', (req, res) => {
      
-    pool.query("SELECT * FROM users", function (err, result, fields) {
+    pool.query("SELECT * FROM users order by score desc", function (err, result, fields) {
         if (err) throw err;
         res.send(result);
       })
