@@ -2,10 +2,12 @@ package com.example.myntrahackathon.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.res.ColorStateList;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -50,7 +52,8 @@ public class PlayQuizFragment extends Fragment {
     private TextView tvOption1, tvOption2, tvOption3, tvOption4, tvQuestion;
     private int correctAns = 0, questionIndex;
     private Button btnNext;
-    private ImageView ivQuestion, recommendation_1, recommendation_2;
+    private ImageView ivQuestion;
+    private CardView recommendation_1, recommendation_2;
     private LottieAnimationView lottie_timer;
     private CountDownTimer countDownTimer;
 
@@ -63,6 +66,7 @@ public class PlayQuizFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         MainActivity.goToFragment = "NoAction";
         questions = new ArrayList<>();
         tvOption1 = view.findViewById(R.id.tvOption1);
@@ -232,11 +236,19 @@ public class PlayQuizFragment extends Fragment {
         if (questionIndex == 4) {
             btnNext.setText("Submit");
         }
-        Picasso.get().load(question.getRecom1().getImage()).resize(200, 200).into(recommendation_1);
-        Picasso.get().load(question.getRecom2().getImage()).resize(200, 200).into(recommendation_2);
+        setRecommendations(question);
         setOnClickListeners(question, questionIndex);
         lottie_timer.playAnimation();
         startTimer();
+    }
+
+    private void setRecommendations(Question question) {
+        Picasso.get().load(question.getRecom1().getImage()).resize(200, 200).into((ImageView) recommendation_1.getRootView().findViewById(R.id.ivLinkImage));
+        Picasso.get().load(question.getRecom2().getImage()).resize(200, 200).into((ImageView) recommendation_2.getRootView().findViewById(R.id.ivLinkImage));
+        ((TextView) recommendation_1.getRootView().findViewById(R.id.tvTitle)).setText(question.getRecom1().getTitle());
+        ((TextView) recommendation_1.getRootView().findViewById(R.id.tvDescription)).setText(question.getRecom1().getDescription());
+        ((TextView) recommendation_2.getRootView().findViewById(R.id.tvTitle)).setText(question.getRecom2().getTitle());
+        ((TextView) recommendation_2.getRootView().findViewById(R.id.tvDescription)).setText(question.getRecom1().getDescription());
     }
 
     private void setOnClickListeners(Question question, int ind) {
@@ -286,6 +298,18 @@ public class PlayQuizFragment extends Fragment {
                     setQuestion();
                 }
             }
+        });
+
+        recommendation_1.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(question.getRecom1().getUrl()));
+            startActivity(i);
+        });
+
+        recommendation_2.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(question.getRecom2().getUrl()));
+            startActivity(i);
         });
     }
 }

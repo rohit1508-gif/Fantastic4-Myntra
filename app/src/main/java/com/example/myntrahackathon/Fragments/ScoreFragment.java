@@ -17,7 +17,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.MainActivity;
@@ -86,7 +85,7 @@ public class ScoreFragment extends Fragment {
         }
     }
 
-    private void sendScore() throws JSONException {
+    private void sendScore() {
         String url = "https://fantastic4-myntra.herokuapp.com/quiz/game/" + quizId + "/return";
         JSONObject body = new JSONObject();
         try {
@@ -96,11 +95,15 @@ public class ScoreFragment extends Fragment {
         }
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JSONObject obj = new JSONObject();
-        obj.put("score",score);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PATCH, url,obj, new Response.Listener<JSONObject>() {
+        try {
+            obj.put("score", score);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PATCH, url, obj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
+                updateUIForSubmitted();
             }
         }, new Response.ErrorListener() {
             @Override
