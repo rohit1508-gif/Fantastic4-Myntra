@@ -127,7 +127,7 @@ app.get('/quiz', (req, res) => {
         if (err) throw err;
         res.send(result);
       })
-    res.redirect('/quiz/game');
+   
 })
 
 app.post('/quiz/game/:id/return', (req, res) => {
