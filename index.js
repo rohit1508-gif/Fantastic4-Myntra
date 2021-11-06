@@ -5,6 +5,7 @@ const pool = require('./database');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var path = require('path');
+const cookieSession = require('cookie-session');
 // var BetterMemoryStore = require(__dirname + '/memory');
 
 
@@ -20,8 +21,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: 'secret',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookieSession: {maxAge:24*60*60*1000}
 }));
+
+// app.use(cookieSession({
+//     name: 'session',
+  
+//     // Cookie Options
+//     maxAge: 24 * 60 * 60 * 1000 // 24 hours
+//   }))
 // app.use(require('connect').bodyParser());
 
 
@@ -33,7 +42,12 @@ const server = http.createServer(app);
 
 
 app.get('/',  (req, res) =>{
-    res.send('Hello World!!');
+    var sql = "SELECT * FROM users WHERE username = ?";
+    pool.query(sql, [req.session.username], function(err, result){
+        if(err) throw err;
+        res.send(result);
+    })
+
 })
 
 
@@ -42,11 +56,7 @@ app.get('/quiz', (req, res) => {
         if (err) throw err;
         res.send(result);
       })
-<<<<<<< HEAD
     // res.redirect('/quiz/game');
-=======
-   
->>>>>>> dd0cdd315de49ac0519c8377b5501986f7f9b3ea
 })
 
 app.put('/quiz/game/:id/return', (req, res) => {
@@ -61,13 +71,14 @@ app.put('/quiz/game/:id/return', (req, res) => {
             pool.query(sql, [score, id] ,function (err, result) {
               if (err) throw err;
               console.log(result.affectedRows + " record(s) updated");
+              res.redirect('/');
             });
           });
     })
 
 app.get('/leaderboard', (req, res) => {
      
-    pool.query("SELECT * FROM users", function (err, result, fields) {
+    pool.query("SELECT * FROM users order by score desc", function (err, result, fields) {
         if (err) throw err;
         res.send(result);
       })
