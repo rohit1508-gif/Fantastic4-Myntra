@@ -110,7 +110,7 @@ public class PlayQuizFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 if (pd != null && pd.isShowing())
                     pd.dismiss();
-                Toast.makeText(getContext(), "Couldn't load. Error occurred !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Couldn't load. Error occurred !", Toast.LENGTH_LONG).show();
             }
         });
         requestQueue.add(request);
