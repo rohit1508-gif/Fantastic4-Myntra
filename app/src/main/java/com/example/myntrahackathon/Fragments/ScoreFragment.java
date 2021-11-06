@@ -15,10 +15,16 @@ import androidx.fragment.app.FragmentTransaction;
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ScoreFragment extends Fragment {
     private String quizId, quizName;
@@ -79,16 +85,22 @@ public class ScoreFragment extends Fragment {
         }
     }
 
-    private void sendScore() {
+    private void sendScore() throws JSONException {
         String url = "https://fantastic4-myntra.herokuapp.com/quiz/game/" + quizId + "/return";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
-                response -> {
-                    updateUIForSubmitted();
-                },
-                error -> {
+        JSONObject obj = new JSONObject();
+        obj.put("score",score);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PATCH, url,obj, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
 
-                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
         requestQueue.add(request);
     }
 
