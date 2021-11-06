@@ -29,7 +29,7 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
     private String cloth;
     private Spinner spinner;
     private LottieAnimationView lottie_exchange;
-    private TextView tvScheduled;
+    private TextView tvScheduled, tvThankYou;
     private EditText etAddress;
 
     @Nullable
@@ -49,6 +49,7 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
         lottie_exchange = view.findViewById(R.id.lottie_exchange);
         tvScheduled = view.findViewById(R.id.tvScheduled);
         etAddress = view.findViewById(R.id.etAddress);
+        tvThankYou = view.findViewById(R.id.tvThankYou);
         adaptUiPriorSchedule();
     }
 
@@ -56,19 +57,17 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
         setSpinner();
         lottie_exchange.setVisibility(View.GONE);
         tvScheduled.setVisibility(View.GONE);
+        tvThankYou.setVisibility(View.GONE);
         btnContinue.setVisibility(View.GONE);
         btnSchedule.setOnClickListener(v -> {
             if (etAddress.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getContext(), "Please enter the pickup address", Toast.LENGTH_SHORT).show();
             } else {
                 ProgressDialog progressDialog = ProgressDialog.show(getContext(), null, "Scheduling your pickup...");
-                try {
-                    Thread.sleep(2500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                progressDialog.dismiss();
-                adaptUiAfterSchedule();
+                new Handler().postDelayed(() -> {
+                    progressDialog.dismiss();
+                    adaptUiAfterSchedule();
+                }, 2000);
             }
         });
     }
@@ -76,6 +75,7 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
     private void adaptUiAfterSchedule() {
         etAddress.setVisibility(View.GONE);
         btnSchedule.setVisibility(View.GONE);
+        spinner.setVisibility(View.GONE);
         lottie_exchange.setVisibility(View.VISIBLE);
         lottie_exchange.playAnimation();
 
@@ -89,8 +89,9 @@ public class ExchangeFragment extends Fragment implements AdapterView.OnItemSele
             });
             tvScheduled.setText("Your pickup request for a " + cloth + " has been scheduled. Within 2 working days, our delivery partner executive will reach you for quality check and pickup. You'll receive your discount voucher once this process is completed.");
             tvScheduled.setVisibility(View.VISIBLE);
+            tvThankYou.setVisibility(View.VISIBLE);
             btnContinue.setVisibility(View.VISIBLE);
-        }, 700);
+        }, 900);
     }
 
     private void setSpinner() {
