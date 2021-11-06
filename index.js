@@ -94,6 +94,7 @@ app.get('/leaderboard', (req, res) => {
 app.get('/quiz/:id/game', (req, res) => {
 
     let quiz = [];
+    let random=[];
     let id = req.params.id;
     if(id==1){
     pool.query("SELECT * FROM Questions", function (err, result, fields) {
@@ -101,8 +102,8 @@ app.get('/quiz/:id/game', (req, res) => {
         // console.log(result);
         while(quiz.length<5){
             var r = Math.floor(Math.random() * result.length);
-            if(quiz.indexOf(r) === -1) quiz.push(result[r])
-            console.log(r);
+            if(random.indexOf(r) === -1) {quiz.push(result[r]); random.push(r);console.log(r);}
+            
         }
         console.log("quiz is here", quiz);
         res.send(quiz);
@@ -114,8 +115,8 @@ app.get('/quiz/:id/game', (req, res) => {
             // console.log(result);
             while(quiz.length<5){
                 var r = Math.floor(Math.random() * result.length);
-                if(quiz.indexOf(r) === -1) quiz.push(result[r])
-                console.log(r);
+                if(random.indexOf(r) === -1){quiz.push(result[r]); random.push(r);console.log(r);}
+                
             }
             console.log("quiz is here", quiz);
             res.send(quiz);
