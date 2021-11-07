@@ -2,7 +2,6 @@ package com.example.myntrahackathon.Fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,23 +15,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.MainActivity;
+import com.example.myntrahackathon.ModalClasses.LoginUser;
 import com.example.myntrahackathon.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginFragment extends Fragment {
     ProgressBar progressBar;
     LottieAnimationView lottieAnimationView;
+    Map<String, LoginUser> userMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +38,7 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Myntra Play");
         MainActivity.goToFragment = "CloseApplication";
+        getDatabase();
         EditText etEmail = view.findViewById(R.id.etEmail);
         EditText etPassword = view.findViewById(R.id.etPassword);
         progressBar = view.findViewById(R.id.progressBarLogin);
@@ -56,18 +50,37 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    private void authenticate(String emailId, String password) {
+    private void getDatabase() {
+        userMap = new HashMap<>();
+        userMap.put("abcd", new LoginUser(1, "ABCD", 30, "abcd"));
+        userMap.put("shubha", new LoginUser(2, "SHUBH123", 50, "shubha"));
+        userMap.put("rohit", new LoginUser(3, "ROHIT123", 40, "rohit"));
+        userMap.put("Shruti", new LoginUser(4, "SHRUTI123", 40, "Shruti"));
+        userMap.put("Abhinav", new LoginUser(5, "ABHI123", 60, "Abhinav"));
+        userMap.put("Rohan", new LoginUser(6, "ROHAN123", 20, "Rohan"));
+        userMap.put("Payal", new LoginUser(7, "PAYAL123", 0, "Payal"));
+    }
+
+    private void authenticate(String username, String password) {
         new Handler().postDelayed(() -> {
             progressBar.setVisibility(View.GONE);
-            lottieAnimationView.setVisibility(View.VISIBLE);
-            lottieAnimationView.playAnimation();
-            new Handler().postDelayed(() -> {
-                if (getFragmentManager() != null) {
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, new HomeFragment());
-                    transaction.commit();
-                }
-            }, 1700);
+            if (userMap.containsKey(username) && userMap.get(username).getPassword().equals(password)) {
+                lottieAnimationView.setVisibility(View.VISIBLE);
+                lottieAnimationView.playAnimation();
+                new Handler().postDelayed(() -> {
+                    if (getFragmentManager() != null) {
+                        HomeFragment homeFragment = new HomeFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("username", username);
+                        homeFragment.setArguments(bundle);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragmentContainer, homeFragment);
+                        transaction.commit();
+                    }
+                }, 1700);
+            } else {
+                Toast.makeText(getContext(), "Wrong username and/or password!", Toast.LENGTH_SHORT).show();
+            }
         }, 2000);
     }
 }
