@@ -14,6 +14,8 @@ import com.example.myntrahackathon.Fragments.RedeemFragment;
 public class MainActivity extends AppCompatActivity {
 
     public static String goToFragment = "CloseApplication";
+    public static int userId;
+    public static int userScore;
     private long backPressedTime = 0;
     private Toast backToast;
 

@@ -1,5 +1,8 @@
 package com.example.myntrahackathon.Fragments;
 
+import static com.example.myntrahackathon.MainActivity.userId;
+import static com.example.myntrahackathon.MainActivity.userScore;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -67,6 +70,8 @@ public class LoginFragment extends Fragment {
             if (userMap.containsKey(username) && userMap.get(username).getPassword().equals(password)) {
                 lottieAnimationView.setVisibility(View.VISIBLE);
                 lottieAnimationView.playAnimation();
+                userId = userMap.get(username).getUser_id();
+                userScore = userMap.get(username).getScore();
                 new Handler().postDelayed(() -> {
                     if (getFragmentManager() != null) {
                         HomeFragment homeFragment = new HomeFragment();

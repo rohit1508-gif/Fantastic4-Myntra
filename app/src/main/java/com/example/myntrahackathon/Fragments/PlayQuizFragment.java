@@ -1,5 +1,7 @@
 package com.example.myntrahackathon.Fragments;
 
+import static com.example.myntrahackathon.MainActivity.userId;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -154,7 +156,7 @@ public class PlayQuizFragment extends Fragment {
         Fragment scoreFragment = new ScoreFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("Score", correctAns);
-        bundle.putString("QuizId", quizId);
+        bundle.putInt("UserId", userId);
         bundle.putString("QuizName", quizName);
         scoreFragment.setArguments(bundle);
         if (getFragmentManager() != null) {
@@ -277,7 +279,7 @@ public class PlayQuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 countDownTimer.cancel();
-                if (questionIndex == 5) {
+                if (questionIndex == 4) {
                     submitScores();
                 } else {
                     questionIndex++;

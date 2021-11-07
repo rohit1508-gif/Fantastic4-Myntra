@@ -1,5 +1,7 @@
 package com.example.myntrahackathon.Fragments;
 
+import static com.example.myntrahackathon.MainActivity.userScore;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +15,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.R;
@@ -25,9 +29,11 @@ import com.example.myntrahackathon.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 public class ScoreFragment extends Fragment {
-    private String quizId, quizName;
-    private int score;
+    private String quizName;
+    private int score, userId;
     private TextView tvUploading, tvCompleted, tvQuizName, tvScore;
     private LottieAnimationView lottie_submitted, lottie_uploading;
     private ImageView ivHome, ivLeaderBoard;
@@ -80,32 +86,47 @@ public class ScoreFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             score = getArguments().getInt("Score");
-            quizId = getArguments().getString("QuizId");
+            userId = getArguments().getInt("UserId");
             quizName = getArguments().getString("QuizName");
         }
     }
 
     private void sendScore() {
-        String url = "https://fantastic4-myntra.herokuapp.com/quiz/game/" + quizId + "/return";
+        String url = "https://fantastic4-myntra.herokuapp.com/quiz/game/" + userId + "/return";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JSONObject obj = new JSONObject();
         try {
-            obj.put("score", score);
+            obj.put("score", (userScore + score));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, obj, new Response.Listener<JSONObject>() {
+        final String mRequestBody = obj.toString();
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
                 updateUIForSubmitted();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
-        });
-        requestQueue.add(request);
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void updateUIForUploading() {
