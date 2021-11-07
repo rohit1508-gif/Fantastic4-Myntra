@@ -6,9 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -31,7 +30,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.MainActivity;
-import com.example.myntrahackathon.ModalClasses.LinkPreview;
 import com.example.myntrahackathon.ModalClasses.Question;
 import com.example.myntrahackathon.R;
 import com.google.android.material.button.MaterialButton;
@@ -39,23 +37,18 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayQuizFragment extends Fragment {
     private String quizId, quizName;
     private List<Question> questions;
-    private TextView tvRecommendations, tvQuestion;
+    private TextView tvQuestion;
     private MaterialButton tvOption1, tvOption2, tvOption3, tvOption4, btnRecommendation1, btnRecommendation2;
-    private int correctAns = 0, questionIndex;
+    private int correctAns, questionIndex;
     private Button btnNext;
     private ImageView ivQuestion;
-    private CardView recommendation_1, recommendation_2;
     private LottieAnimationView lottie_timer;
     private CountDownTimer countDownTimer;
 
@@ -70,6 +63,7 @@ public class PlayQuizFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.goToFragment = "NoAction";
         questions = new ArrayList<>();
+        correctAns = 0;
         tvOption1 = view.findViewById(R.id.tvOption1);
         tvOption2 = view.findViewById(R.id.tvOption2);
         tvOption3 = view.findViewById(R.id.tvOption3);
@@ -78,9 +72,6 @@ public class PlayQuizFragment extends Fragment {
         btnNext = view.findViewById(R.id.btnNext);
         ivQuestion = view.findViewById(R.id.ivQuestion);
         lottie_timer = view.findViewById(R.id.lottie_timer);
-        recommendation_1 = view.findViewById(R.id.recommendation_1);
-        recommendation_2 = view.findViewById(R.id.recommendation_2);
-        tvRecommendations = view.findViewById(R.id.tvRecommendations);
         btnRecommendation1 = view.findViewById(R.id.btnRecommendation1);
         btnRecommendation2 = view.findViewById(R.id.btnRecommendation2);
 
@@ -161,7 +152,7 @@ public class PlayQuizFragment extends Fragment {
         scoreFragment.setArguments(bundle);
         if (getFragmentManager() != null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainer, new ScoreFragment());
+            transaction.replace(R.id.fragmentContainer, scoreFragment);
             transaction.commit();
         }
     }
@@ -200,8 +191,6 @@ public class PlayQuizFragment extends Fragment {
 
     private void setQuestion() {
         setBackground();
-        //recommendation_1.setVisibility(View.GONE);
-        //recommendation_2.setVisibility(View.GONE);
         Question question = questions.get(questionIndex);
         setRecommendations(question);
         String s = question.getImage();
@@ -226,12 +215,6 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void setRecommendations(Question question) {
-        /*
-        GetLinkPreview_1 linkPreview_1 = new GetLinkPreview_1();
-        linkPreview_1.execute(question.getRecom1());
-        GetLinkPreview_2 linkPreview_2 = new GetLinkPreview_2();
-        linkPreview_2.execute(question.getRecom2());
-         */
         btnRecommendation1.setText(question.getRecom1());
         btnRecommendation2.setText(question.getRecom2());
         btnRecommendation1.setOnClickListener(v -> {
@@ -291,91 +274,5 @@ public class PlayQuizFragment extends Fragment {
                 }
             }
         });
-    }
-
-    private class GetLinkPreview_1 extends AsyncTask<String, String, LinkPreview> {
-        @Override
-        protected LinkPreview doInBackground(String... strings) {
-            String link = strings[0];
-            LinkPreview linkPreview = new LinkPreview();
-            try {
-                Document doc = Jsoup.connect(link).get();
-                linkPreview.setUrl(link);
-                linkPreview.setTitle(doc.title());
-                linkPreview.setDescription(doc.text());
-                Element image = doc.select("meta[property*='og:image:secure_url']").first();
-                if (image != null) {
-                    linkPreview.setImage(image.absUrl("content"));
-                } else {
-                    image = doc.select("meta[property*='og:image']").first();
-                    if (image != null) {
-                        linkPreview.setImage(image.absUrl("content"));
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return linkPreview;
-        }
-
-        @Override
-        protected void onPostExecute(LinkPreview linkPreview) {
-            super.onPostExecute(linkPreview);
-            if (linkPreview != null && linkPreview.getUrl() != null) {
-                Picasso.get().load(linkPreview.getImage()).resize(200, 200).into((ImageView) recommendation_1.getRootView().findViewById(R.id.ivLinkImage));
-                ((TextView) recommendation_1.getRootView().findViewById(R.id.tvTitle)).setText(linkPreview.getTitle());
-                ((TextView) recommendation_1.getRootView().findViewById(R.id.tvDescription)).setText(linkPreview.getDescription());
-                recommendation_1.setOnClickListener(v -> {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(linkPreview.getUrl()));
-                    startActivity(i);
-                });
-                tvRecommendations.setVisibility(View.VISIBLE);
-                recommendation_1.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    private class GetLinkPreview_2 extends AsyncTask<String, String, LinkPreview> {
-        @Override
-        protected LinkPreview doInBackground(String... strings) {
-            String link = strings[0];
-            LinkPreview linkPreview = new LinkPreview();
-            try {
-                Document doc = Jsoup.connect(link).get();
-                linkPreview.setUrl(link);
-                linkPreview.setTitle(doc.title());
-                linkPreview.setDescription(doc.text());
-                Element image = doc.select("meta[property*='og:image:secure_url']").first();
-                if (image != null) {
-                    linkPreview.setImage(image.absUrl("content"));
-                } else {
-                    image = doc.select("meta[property*='og:image']").first();
-                    if (image != null) {
-                        linkPreview.setImage(image.absUrl("content"));
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return linkPreview;
-        }
-
-        @Override
-        protected void onPostExecute(LinkPreview linkPreview) {
-            super.onPostExecute(linkPreview);
-            if (linkPreview != null && !linkPreview.getUrl().isEmpty()) {
-                Picasso.get().load(linkPreview.getImage()).resize(200, 200).into((ImageView) recommendation_2.getRootView().findViewById(R.id.ivLinkImage));
-                ((TextView) recommendation_2.getRootView().findViewById(R.id.tvTitle)).setText(linkPreview.getTitle());
-                ((TextView) recommendation_2.getRootView().findViewById(R.id.tvDescription)).setText(linkPreview.getDescription());
-                recommendation_2.setOnClickListener(v -> {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(linkPreview.getUrl()));
-                    startActivity(i);
-                });
-                tvRecommendations.setVisibility(View.VISIBLE);
-                recommendation_2.setVisibility(View.VISIBLE);
-            }
-        }
     }
 }

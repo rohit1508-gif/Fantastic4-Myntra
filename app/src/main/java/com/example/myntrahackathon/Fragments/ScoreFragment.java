@@ -3,11 +3,13 @@ package com.example.myntrahackathon.Fragments;
 import static com.example.myntrahackathon.MainActivity.userScore;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,8 +52,8 @@ public class ScoreFragment extends Fragment {
         MainActivity.goToFragment = "NoAction";
         getActivity().setTitle("Myntra Play");
         initializeViews(view);
-        updateUIForUploading();
         getArgumentsFromBundle();
+        updateUIForUploading();
         sendScore();
     }
 
@@ -85,9 +87,9 @@ public class ScoreFragment extends Fragment {
     private void getArgumentsFromBundle() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            score = getArguments().getInt("Score");
-            userId = getArguments().getInt("UserId");
-            quizName = getArguments().getString("QuizName");
+            score = bundle.getInt("Score");
+            userId = bundle.getInt("UserId");
+            quizName = bundle.getString("QuizName");
         }
     }
 
@@ -96,7 +98,7 @@ public class ScoreFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JSONObject obj = new JSONObject();
         try {
-            obj.put("score", (userScore + score));
+            obj.put("score", score + userScore);
         } catch (JSONException e) {
             e.printStackTrace();
         }
