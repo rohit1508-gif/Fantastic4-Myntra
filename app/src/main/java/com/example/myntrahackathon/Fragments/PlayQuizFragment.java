@@ -1,7 +1,6 @@
 package com.example.myntrahackathon.Fragments;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -107,7 +106,7 @@ public class PlayQuizFragment extends Fragment {
                             obj.optString("Option_2"),
                             obj.optString("Option_3"),
                             obj.optString("Option_4"),
-                            obj.optString("Cprrect_ans"),
+                            obj.optString("Correct_ans"),
                             obj.optString("Recom_1"),
                             obj.optString("Recom_2")
                     );
@@ -139,11 +138,11 @@ public class PlayQuizFragment extends Fragment {
                     Toast.makeText(getContext(), "Time's up... Submit Now", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Time's up... Move to next question", Toast.LENGTH_SHORT).show();
-                    tvOption1.setClickable(false);
-                    tvOption2.setClickable(false);
-                    tvOption3.setClickable(false);
-                    tvOption4.setClickable(false);
                 }
+                tvOption1.setClickable(false);
+                tvOption2.setClickable(false);
+                tvOption3.setClickable(false);
+                tvOption4.setClickable(false);
             }
         }.start();
     }
@@ -164,6 +163,8 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void isCorrect(String optionClicked, String correctOption) {
+        lottie_timer.pauseAnimation();
+        countDownTimer.cancel();
         tvOption1.setClickable(false);
         tvOption2.setClickable(false);
         tvOption3.setClickable(false);
@@ -186,7 +187,7 @@ public class PlayQuizFragment extends Fragment {
             correctAns++;
     }
 
-    private void setBackground(Context context) {
+    private void setBackground() {
         tvOption1.setBackgroundColor(Color.WHITE);
         tvOption2.setBackgroundColor(Color.WHITE);
         tvOption3.setBackgroundColor(Color.WHITE);
@@ -194,16 +195,16 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void setQuestion() {
-        setBackground(getContext());
+        setBackground();
         tvRecommendations.setVisibility(View.GONE);
         recommendation_1.setVisibility(View.GONE);
         recommendation_2.setVisibility(View.GONE);
         Question question = questions.get(questionIndex);
-        setRecommendations(question);
+        //setRecommendations(question);
         String s = question.getImage();
         String[] p = s.split("/");
-        String imageLink = "https://drive.google.com/uc?export=download&id="+p[5];
-        Picasso.get().load(imageLink).resize(150,150).into(ivQuestion);
+        String imageLink = "https://drive.google.com/uc?export=download&id=" + p[5];
+        Picasso.get().load(imageLink).into(ivQuestion);
         tvQuestion.setText(question.getQuestion());
         tvOption1.setText(question.getOption1());
         tvOption2.setText(question.getOption2());
@@ -233,8 +234,6 @@ public class PlayQuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isCorrect("a", question.getCorrectOption());
-                lottie_timer.pauseAnimation();
-                countDownTimer.cancel();
             }
         });
 
@@ -242,8 +241,6 @@ public class PlayQuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isCorrect("b", question.getCorrectOption());
-                lottie_timer.pauseAnimation();
-                countDownTimer.cancel();
             }
         });
 
@@ -251,8 +248,6 @@ public class PlayQuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isCorrect("c", question.getCorrectOption());
-                lottie_timer.pauseAnimation();
-                countDownTimer.cancel();
             }
         });
 
@@ -260,19 +255,22 @@ public class PlayQuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isCorrect("d", question.getCorrectOption());
-                lottie_timer.pauseAnimation();
-                countDownTimer.cancel();
             }
         });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countDownTimer.cancel();
                 if (questionIndex == 5) {
                     submitScores();
                 } else {
                     questionIndex++;
                     setQuestion();
+                    tvOption1.setClickable(true);
+                    tvOption2.setClickable(true);
+                    tvOption3.setClickable(true);
+                    tvOption4.setClickable(true);
                 }
             }
         });

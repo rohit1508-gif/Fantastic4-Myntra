@@ -87,12 +87,6 @@ public class ScoreFragment extends Fragment {
 
     private void sendScore() {
         String url = "https://fantastic4-myntra.herokuapp.com/quiz/game/" + quizId + "/return";
-        JSONObject body = new JSONObject();
-        try {
-            body.put("score", score);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JSONObject obj = new JSONObject();
         try {
