@@ -19,8 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -193,14 +191,6 @@ public class PlayQuizFragment extends Fragment {
         tvOption2.setBackgroundColor(Color.WHITE);
         tvOption3.setBackgroundColor(Color.WHITE);
         tvOption4.setBackgroundColor(Color.WHITE);
-      //  tvOption1.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
-       // tvOption2.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
-       // tvOption3.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
-       // tvOption4.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
-     //   ViewCompat.setBackgroundTintList(tvOption1, ContextCompat.getColorStateList(context, R.color.white));
-       // ViewCompat.setBackgroundTintList(tvOption2, ContextCompat.getColorStateList(context, R.color.white));
-     //   ViewCompat.setBackgroundTintList(tvOption3, ContextCompat.getColorStateList(context, R.color.white));
-       // ViewCompat.setBackgroundTintList(tvOption4, ContextCompat.getColorStateList(context, R.color.white));
     }
 
     private void setQuestion() {
@@ -210,8 +200,11 @@ public class PlayQuizFragment extends Fragment {
         recommendation_2.setVisibility(View.GONE);
         Question question = questions.get(questionIndex);
         setRecommendations(question);
+        String s = question.getImage();
+        String[] p = s.split("/");
+        String imageLink = "https://drive.google.com/uc?export=download&id="+p[5];
+        Picasso.get().load(imageLink).resize(150,150).into(ivQuestion);
         tvQuestion.setText(question.getQuestion());
-        Picasso.get().load(question.getImage()).resize(150, 150).into(ivQuestion);
         tvOption1.setText(question.getOption1());
         tvOption2.setText(question.getOption2());
         tvOption3.setText(question.getOption3());
