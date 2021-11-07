@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -34,6 +35,7 @@ import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.ModalClasses.LinkPreview;
 import com.example.myntrahackathon.ModalClasses.Question;
 import com.example.myntrahackathon.R;
+import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -49,7 +51,8 @@ import java.util.List;
 public class PlayQuizFragment extends Fragment {
     private String quizId, quizName;
     private List<Question> questions;
-    private TextView tvOption1, tvOption2, tvOption3, tvOption4, tvQuestion, tvRecommendations;
+    private TextView tvRecommendations, tvQuestion;
+    private MaterialButton tvOption1, tvOption2, tvOption3, tvOption4;
     private int correctAns = 0, questionIndex;
     private Button btnNext;
     private ImageView ivQuestion;
@@ -135,16 +138,13 @@ public class PlayQuizFragment extends Fragment {
             @Override
             public void onFinish() {
                 if (questionIndex == 5) {
-                    submitScores();
+                    Toast.makeText(getContext(), "Time's up... Submit Now", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), "Time's up... Moving to next question", Toast.LENGTH_SHORT).show();
-                    questionIndex++;
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    setQuestion();
+                    Toast.makeText(getContext(), "Time's up... Move to next question", Toast.LENGTH_SHORT).show();
+                    tvOption1.setClickable(false);
+                    tvOption2.setClickable(false);
+                    tvOption3.setClickable(false);
+                    tvOption4.setClickable(false);
                 }
             }
         }.start();
@@ -189,14 +189,18 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void setBackground(Context context) {
-        tvOption1.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
-        tvOption2.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
-        tvOption3.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
-        tvOption4.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
-//        ViewCompat.setBackgroundTintList(tvOption1, ContextCompat.getColorStateList(context, R.color.white));
-//        ViewCompat.setBackgroundTintList(tvOption2, ContextCompat.getColorStateList(context, R.color.white));
-//        ViewCompat.setBackgroundTintList(tvOption3, ContextCompat.getColorStateList(context, R.color.white));
-//        ViewCompat.setBackgroundTintList(tvOption4, ContextCompat.getColorStateList(context, R.color.white));
+        tvOption1.setBackgroundColor(Color.WHITE);
+        tvOption2.setBackgroundColor(Color.WHITE);
+        tvOption3.setBackgroundColor(Color.WHITE);
+        tvOption4.setBackgroundColor(Color.WHITE);
+      //  tvOption1.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
+       // tvOption2.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
+       // tvOption3.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
+       // tvOption4.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
+     //   ViewCompat.setBackgroundTintList(tvOption1, ContextCompat.getColorStateList(context, R.color.white));
+       // ViewCompat.setBackgroundTintList(tvOption2, ContextCompat.getColorStateList(context, R.color.white));
+     //   ViewCompat.setBackgroundTintList(tvOption3, ContextCompat.getColorStateList(context, R.color.white));
+       // ViewCompat.setBackgroundTintList(tvOption4, ContextCompat.getColorStateList(context, R.color.white));
     }
 
     private void setQuestion() {
@@ -212,6 +216,10 @@ public class PlayQuizFragment extends Fragment {
         tvOption2.setText(question.getOption2());
         tvOption3.setText(question.getOption3());
         tvOption4.setText(question.getOption4());
+        tvOption1.setClickable(true);
+        tvOption2.setClickable(true);
+        tvOption3.setClickable(true);
+        tvOption4.setClickable(true);
         if (questionIndex == 4) {
             btnNext.setText("Submit");
         }
@@ -305,16 +313,18 @@ public class PlayQuizFragment extends Fragment {
         @Override
         protected void onPostExecute(LinkPreview linkPreview) {
             super.onPostExecute(linkPreview);
-            Picasso.get().load(linkPreview.getImage()).resize(200, 200).into((ImageView) recommendation_1.getRootView().findViewById(R.id.ivLinkImage));
-            ((TextView) recommendation_1.getRootView().findViewById(R.id.tvTitle)).setText(linkPreview.getTitle());
-            ((TextView) recommendation_1.getRootView().findViewById(R.id.tvDescription)).setText(linkPreview.getDescription());
-            recommendation_1.setOnClickListener(v -> {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(linkPreview.getUrl()));
-                startActivity(i);
-            });
-            tvRecommendations.setVisibility(View.VISIBLE);
-            recommendation_1.setVisibility(View.VISIBLE);
+            if (linkPreview != null && linkPreview.getUrl() != null) {
+                Picasso.get().load(linkPreview.getImage()).resize(200, 200).into((ImageView) recommendation_1.getRootView().findViewById(R.id.ivLinkImage));
+                ((TextView) recommendation_1.getRootView().findViewById(R.id.tvTitle)).setText(linkPreview.getTitle());
+                ((TextView) recommendation_1.getRootView().findViewById(R.id.tvDescription)).setText(linkPreview.getDescription());
+                recommendation_1.setOnClickListener(v -> {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(linkPreview.getUrl()));
+                    startActivity(i);
+                });
+                tvRecommendations.setVisibility(View.VISIBLE);
+                recommendation_1.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -346,16 +356,18 @@ public class PlayQuizFragment extends Fragment {
         @Override
         protected void onPostExecute(LinkPreview linkPreview) {
             super.onPostExecute(linkPreview);
-            Picasso.get().load(linkPreview.getImage()).resize(200, 200).into((ImageView) recommendation_2.getRootView().findViewById(R.id.ivLinkImage));
-            ((TextView) recommendation_2.getRootView().findViewById(R.id.tvTitle)).setText(linkPreview.getTitle());
-            ((TextView) recommendation_2.getRootView().findViewById(R.id.tvDescription)).setText(linkPreview.getDescription());
-            recommendation_2.setOnClickListener(v -> {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(linkPreview.getUrl()));
-                startActivity(i);
-            });
-            tvRecommendations.setVisibility(View.VISIBLE);
-            recommendation_2.setVisibility(View.VISIBLE);
+            if (linkPreview != null && !linkPreview.getUrl().isEmpty()) {
+                Picasso.get().load(linkPreview.getImage()).resize(200, 200).into((ImageView) recommendation_2.getRootView().findViewById(R.id.ivLinkImage));
+                ((TextView) recommendation_2.getRootView().findViewById(R.id.tvTitle)).setText(linkPreview.getTitle());
+                ((TextView) recommendation_2.getRootView().findViewById(R.id.tvDescription)).setText(linkPreview.getDescription());
+                recommendation_2.setOnClickListener(v -> {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(linkPreview.getUrl()));
+                    startActivity(i);
+                });
+                tvRecommendations.setVisibility(View.VISIBLE);
+                recommendation_2.setVisibility(View.VISIBLE);
+            }
         }
     }
 }
