@@ -49,7 +49,7 @@ public class PlayQuizFragment extends Fragment {
     private String quizId, quizName;
     private List<Question> questions;
     private TextView tvRecommendations, tvQuestion;
-    private MaterialButton tvOption1, tvOption2, tvOption3, tvOption4;
+    private MaterialButton tvOption1, tvOption2, tvOption3, tvOption4, btnRecommendation1, btnRecommendation2;
     private int correctAns = 0, questionIndex;
     private Button btnNext;
     private ImageView ivQuestion;
@@ -79,6 +79,8 @@ public class PlayQuizFragment extends Fragment {
         recommendation_1 = view.findViewById(R.id.recommendation_1);
         recommendation_2 = view.findViewById(R.id.recommendation_2);
         tvRecommendations = view.findViewById(R.id.tvRecommendations);
+        btnRecommendation1 = view.findViewById(R.id.btnRecommendation1);
+        btnRecommendation2 = view.findViewById(R.id.btnRecommendation2);
 
         if (getArguments() != null) {
             quizId = getArguments().getString("quizId");
@@ -196,11 +198,10 @@ public class PlayQuizFragment extends Fragment {
 
     private void setQuestion() {
         setBackground();
-        tvRecommendations.setVisibility(View.GONE);
-        recommendation_1.setVisibility(View.GONE);
-        recommendation_2.setVisibility(View.GONE);
+        //recommendation_1.setVisibility(View.GONE);
+        //recommendation_2.setVisibility(View.GONE);
         Question question = questions.get(questionIndex);
-        //setRecommendations(question);
+        setRecommendations(question);
         String s = question.getImage();
         String[] p = s.split("/");
         String imageLink = "https://drive.google.com/uc?export=download&id=" + p[5];
@@ -223,10 +224,24 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void setRecommendations(Question question) {
+        /*
         GetLinkPreview_1 linkPreview_1 = new GetLinkPreview_1();
         linkPreview_1.execute(question.getRecom1());
         GetLinkPreview_2 linkPreview_2 = new GetLinkPreview_2();
         linkPreview_2.execute(question.getRecom2());
+         */
+        btnRecommendation1.setText(question.getRecom1());
+        btnRecommendation2.setText(question.getRecom2());
+        btnRecommendation1.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(question.getRecom1()));
+            startActivity(i);
+        });
+        btnRecommendation2.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(question.getRecom2()));
+            startActivity(i);
+        });
     }
 
     private void setOnClickListeners(Question question, int ind) {
