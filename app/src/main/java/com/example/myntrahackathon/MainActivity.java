@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myntrahackathon.Fragments.ActiveQuizzesFragment;
 import com.example.myntrahackathon.Fragments.HomeFragment;
 import com.example.myntrahackathon.Fragments.LoginFragment;
 import com.example.myntrahackathon.Fragments.RedeemFragment;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public static String goToFragment = "CloseApplication";
     public static int userId;
     public static int userScore;
+    public static String userName;
     private long backPressedTime = 0;
     private Toast backToast;
 
@@ -23,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         Intent intent = getIntent();
         if (intent.getStringExtra("DESTINATION_FRAGMENT").equals("HOME_FRAGMENT")) {
             if (getFragmentManager() != null) {

@@ -1,5 +1,7 @@
 package com.example.myntrahackathon.Fragments;
 
+import static com.example.myntrahackathon.MainActivity.userName;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,6 @@ import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.R;
 
 public class HomeFragment extends Fragment {
-    String username = "";
 
     @Nullable
     @Override
@@ -29,10 +30,7 @@ public class HomeFragment extends Fragment {
         getActivity().setTitle("Myntra Play");
         MainActivity.goToFragment = "CloseApplication";
 
-        if (getArguments() != null) {
-            username = getArguments().getString("username");
-            ((TextView) view.findViewById(R.id.tvUserName)).setText(username);
-        }
+        ((TextView) view.findViewById(R.id.tvUserName)).setText(userName);
 
         view.findViewById(R.id.button_quiz).setOnClickListener(v -> {
             if (getFragmentManager() != null) {

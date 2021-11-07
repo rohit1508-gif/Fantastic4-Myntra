@@ -1,6 +1,7 @@
 package com.example.myntrahackathon.Fragments;
 
 import static com.example.myntrahackathon.MainActivity.userId;
+import static com.example.myntrahackathon.MainActivity.userName;
 import static com.example.myntrahackathon.MainActivity.userScore;
 
 import android.os.Bundle;
@@ -72,6 +73,7 @@ public class LoginFragment extends Fragment {
                 lottieAnimationView.playAnimation();
                 userId = userMap.get(username).getUser_id();
                 userScore = userMap.get(username).getScore();
+                userName = userMap.get(username).getUsername();
                 new Handler().postDelayed(() -> {
                     if (getFragmentManager() != null) {
                         HomeFragment homeFragment = new HomeFragment();

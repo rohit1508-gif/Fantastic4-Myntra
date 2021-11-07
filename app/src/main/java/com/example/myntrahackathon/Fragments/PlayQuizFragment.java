@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ import java.util.List;
 public class PlayQuizFragment extends Fragment {
     private String quizId, quizName;
     private List<Question> questions;
-    private TextView tvQuestion;
+    private TextView tvQuestion, tvRecommendation;
     private MaterialButton tvOption1, tvOption2, tvOption3, tvOption4, btnRecommendation1, btnRecommendation2;
     private int correctAns, questionIndex;
     private Button btnNext;
@@ -74,6 +73,7 @@ public class PlayQuizFragment extends Fragment {
         lottie_timer = view.findViewById(R.id.lottie_timer);
         btnRecommendation1 = view.findViewById(R.id.btnRecommendation1);
         btnRecommendation2 = view.findViewById(R.id.btnRecommendation2);
+        tvRecommendation = view.findViewById(R.id.tvRecommendations);
 
         if (getArguments() != null) {
             quizId = getArguments().getString("quizId");
@@ -138,6 +138,9 @@ public class PlayQuizFragment extends Fragment {
                 tvOption2.setClickable(false);
                 tvOption3.setClickable(false);
                 tvOption4.setClickable(false);
+                tvRecommendation.setVisibility(View.VISIBLE);
+                btnRecommendation1.setVisibility(View.VISIBLE);
+                btnRecommendation2.setVisibility(View.VISIBLE);
             }
         }.start();
     }
@@ -180,17 +183,23 @@ public class PlayQuizFragment extends Fragment {
         }
         if (correctOption.equals(optionClicked))
             correctAns++;
+        tvRecommendation.setVisibility(View.VISIBLE);
+        btnRecommendation1.setVisibility(View.VISIBLE);
+        btnRecommendation2.setVisibility(View.VISIBLE);
     }
 
     private void setBackground() {
-        tvOption1.setBackgroundColor(Color.WHITE);
-        tvOption2.setBackgroundColor(Color.WHITE);
-        tvOption3.setBackgroundColor(Color.WHITE);
-        tvOption4.setBackgroundColor(Color.WHITE);
+        tvOption1.setBackgroundColor(Color.LTGRAY);
+        tvOption2.setBackgroundColor(Color.LTGRAY);
+        tvOption3.setBackgroundColor(Color.LTGRAY);
+        tvOption4.setBackgroundColor(Color.LTGRAY);
     }
 
     private void setQuestion() {
         setBackground();
+        tvRecommendation.setVisibility(View.GONE);
+        btnRecommendation1.setVisibility(View.GONE);
+        btnRecommendation2.setVisibility(View.GONE);
         Question question = questions.get(questionIndex);
         setRecommendations(question);
         String s = question.getImage();
