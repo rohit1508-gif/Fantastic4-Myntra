@@ -207,7 +207,10 @@ public class PlayQuizFragment extends Fragment {
         Question question = questions.get(questionIndex);
         setRecommendations(question);
         tvQuestion.setText(question.getQuestion());
-        Picasso.get().load(question.getImage()).resize(150, 150).into(ivQuestion);
+        String s=question.getImage();
+        String[] p=s.split("/");
+        String imageLink="https://drive.google.com/uc?export=download&id="+p[5];
+        Picasso.get().load(imageLink).resize(150, 150).into(ivQuestion);
         tvOption1.setText(question.getOption1());
         tvOption2.setText(question.getOption2());
         tvOption3.setText(question.getOption3());

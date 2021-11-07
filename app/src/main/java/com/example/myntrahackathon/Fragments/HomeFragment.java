@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,7 +15,8 @@ import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.R;
 
 public class HomeFragment extends Fragment {
-
+    String username="";
+    int score;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,6 +28,12 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Myntra Play");
         MainActivity.goToFragment = "CloseApplication";
+        if(getArguments()!=null){
+            username = getArguments().getString("username");
+            score = getArguments().getInt("score");
+        }
+        ((TextView)view.findViewById(R.id.tvUserName)).setText(username);
+        ((TextView)view.findViewById(R.id.tvCoins)).setText(score);
         view.findViewById(R.id.button_quiz).setOnClickListener(v -> {
             if (getFragmentManager() != null) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
