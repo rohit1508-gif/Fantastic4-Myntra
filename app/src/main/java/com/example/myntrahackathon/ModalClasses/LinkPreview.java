@@ -1,42 +1,42 @@
 package com.example.myntrahackathon.ModalClasses;
 
 public class LinkPreview {
-    private String url, title, description;
-    private String image;
+    private java.lang.String url, title, description;
+    private java.lang.String image;
 
     public LinkPreview() {
         image = null;
     }
 
-    public String getUrl() {
+    public java.lang.String getUrl() {
         return url;
     }
 
-    public String getTitle() {
+    public java.lang.String getTitle() {
         return title;
     }
 
-    public String getDescription() {
+    public java.lang.String getDescription() {
         return description;
     }
 
-    public String getImage() {
+    public java.lang.String getImage() {
         return image;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(java.lang.String url) {
         this.url = url;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(java.lang.String title) {
         this.title = title;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(java.lang.String description) {
         this.description = description;
     }
 
-    public void setImage(String image) {
+    public void setImage(java.lang.String image) {
         this.image = image;
     }
 }
