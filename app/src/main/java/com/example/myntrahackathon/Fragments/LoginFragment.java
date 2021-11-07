@@ -15,11 +15,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.R;
 
-public class LoginFragment extends Fragment {
+import org.json.JSONException;
+import org.json.JSONObject;
 
+public class LoginFragment extends Fragment {
+    String username="";
+    int score;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,9 +54,14 @@ public class LoginFragment extends Fragment {
                 lottieAnimationView.playAnimation();
 
                 new Handler().postDelayed(() -> {
+                    Fragment HomeFragment = new HomeFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("username", username);
+                    bundle.putInt("score", score);
+                    HomeFragment.setArguments(bundle);
                     if (getFragmentManager() != null) {
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragmentContainer, new HomeFragment());
+                        transaction.replace(R.id.fragmentContainer, HomeFragment);
                         transaction.commit();
                     }
                 }, 1700);
@@ -59,6 +74,32 @@ public class LoginFragment extends Fragment {
     }
 
     private Boolean authenticate(String emailId, String password) {
+        String url = "https://fantastic4-myntra.herokuapp.com/login";
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("username", emailId);
+            obj.put("password",password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, obj, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    username = response.getString("username");
+                    score = response.getInt("score");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(request);
         return true;
     }
 }
