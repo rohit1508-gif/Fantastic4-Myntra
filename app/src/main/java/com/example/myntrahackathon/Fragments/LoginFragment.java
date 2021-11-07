@@ -2,6 +2,7 @@ package com.example.myntrahackathon.Fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +20,20 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myntrahackathon.MainActivity;
 import com.example.myntrahackathon.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginFragment extends Fragment {
-    String username="";
-    int score;
+    ProgressBar progressBar;
+    LottieAnimationView lottieAnimationView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,63 +47,27 @@ public class LoginFragment extends Fragment {
         MainActivity.goToFragment = "CloseApplication";
         EditText etEmail = view.findViewById(R.id.etEmail);
         EditText etPassword = view.findViewById(R.id.etPassword);
-        ProgressBar progressBar = view.findViewById(R.id.progressBarLogin);
+        progressBar = view.findViewById(R.id.progressBarLogin);
+        lottieAnimationView = view.findViewById(R.id.lottie_login_successful);
 
         view.findViewById(R.id.btnLogIn).setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
-            if (authenticate(etEmail.getText().toString().trim(), etPassword.getText().toString().trim())) {
-                progressBar.setVisibility(View.GONE);
-                LottieAnimationView lottieAnimationView = view.findViewById(R.id.lottie_login_successful);
-                lottieAnimationView.setVisibility(View.VISIBLE);
-                lottieAnimationView.playAnimation();
-
-                new Handler().postDelayed(() -> {
-                    Fragment HomeFragment = new HomeFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("username", username);
-                    bundle.putInt("score", score);
-                    HomeFragment.setArguments(bundle);
-                    if (getFragmentManager() != null) {
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragmentContainer, HomeFragment);
-                        transaction.commit();
-                    }
-                }, 1700);
-
-            } else {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Wrong Email ID or Password !!", Toast.LENGTH_SHORT).show();
-            }
+            authenticate(etEmail.getText().toString().trim(), etPassword.getText().toString().trim());
         });
     }
 
-    private Boolean authenticate(String emailId, String password) {
-        String url = "https://fantastic4-myntra.herokuapp.com/login";
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("username", emailId);
-            obj.put("password",password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, obj, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    username = response.getString("username");
-                    score = response.getInt("score");
-                } catch (JSONException e) {
-                    e.printStackTrace();
+    private void authenticate(String emailId, String password) {
+        new Handler().postDelayed(() -> {
+            progressBar.setVisibility(View.GONE);
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            lottieAnimationView.playAnimation();
+            new Handler().postDelayed(() -> {
+                if (getFragmentManager() != null) {
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainer, new HomeFragment());
+                    transaction.commit();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(request);
-        return true;
+            }, 1700);
+        }, 2000);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.myntrahackathon.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +45,11 @@ public class RedeemFragment extends Fragment {
         adapter = new ExchangeCardAdapter(cards, getContext());
         recyclerView = view.findViewById(R.id.rvExchangeCard);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+
+        ProgressDialog progressDialog = ProgressDialog.show(getContext(), null, "Fetching your exchange cards...");
+        new Handler().postDelayed(() -> {
+            progressDialog.dismiss();
+            recyclerView.setAdapter(adapter);
+        }, 2000);
     }
 }

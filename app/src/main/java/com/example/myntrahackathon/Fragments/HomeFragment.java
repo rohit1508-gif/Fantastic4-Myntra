@@ -28,12 +28,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Myntra Play");
         MainActivity.goToFragment = "CloseApplication";
-        if(getArguments()!=null){
-            username = getArguments().getString("username");
-            score = getArguments().getInt("score");
-        }
-        ((TextView)view.findViewById(R.id.tvUserName)).setText(username);
-        ((TextView)view.findViewById(R.id.tvCoins)).setText(score);
+
         view.findViewById(R.id.button_quiz).setOnClickListener(v -> {
             if (getFragmentManager() != null) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
